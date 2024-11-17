@@ -1,11 +1,12 @@
 import flet as ft
-
+from wechat_robot.utils.ft_utils import setup_base_page
 class MainView:
     def __init__(self, page: ft.Page, controller):
         self.page = page
         self.controller = controller
         self.selected_index = 0
         self.content = ft.Container()
+        setup_base_page(self)
 
     def build(self):
         # 导航栏
