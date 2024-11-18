@@ -10,7 +10,7 @@ class SignUpController:
         self.page = page
         self.app = app
         self.db_manager = DatabaseManager()
-        self.view = SignUpView(page, self.add_user, self.on_back)
+        self.view = SignUpView(page, self)
         
     def add_user(self, first_name, last_name, email, phone, password, confirm_password):
         user_data = {

@@ -5,19 +5,17 @@ import threading
 import time
 
 class LoadView:
-    def __init__(self, page: ft.Page,load_start_wechat,check_wechat_login_status,go_to_main):
+    def __init__(self, page: ft.Page,controller):
+        self.controller = controller
         self.page = page
-        self.load_start_wechat = load_start_wechat
-        self.check_wechat_login_status = check_wechat_login_status
-        self.go_to_main = go_to_main
         setup_base_page(self)
         self.setup_page()
         self.load_page_ui()
-        self.port = self.load_start_wechat()
         # self.app_bar = nav_app_bar("主页")
         # print(create_app_bar("Login", on_back))
         # self.page.add(self.app_bar)
         # 启动后台线程监听登录状态
+        self.port = get_config("wechat","port")
         self.check_login_thread = threading.Thread(target=self.check_login_status)
         self.check_login_thread.start()
 
@@ -27,10 +25,10 @@ class LoadView:
         后台检查微信登录状态，登录成功后跳转到主页面。
         """
         while True:
-            if login_success := self.check_wechat_login_status(self.port):
+            if login_success := self.controller.check_wechat_login_status(self.port):
                 print("登录成功")
                 # 切换到主页面，需要在主线程中执行
-                self.go_to_main()
+                self.controller.go_to_main()
                 # 使用 page 的函数在主线程中执行页面更新
                 # self.page.invoke(navigate_to_main)
                 break
@@ -62,7 +60,7 @@ class LoadView:
                                 alignment=ft.alignment.top_left,
                                 border_radius=ft.border_radius.all(15),
                                 opacity_on_click=0.5,
-                                on_click=lambda e: self.load_start_wechat(),
+                                on_click=lambda e: self.controller.load_start_wechat(),
                             ),
 
                         ],

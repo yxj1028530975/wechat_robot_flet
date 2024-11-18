@@ -2,11 +2,9 @@ import flet as ft
 from wechat_robot.utils.config_utils import get_config
 from wechat_robot.utils.wechat_utils import get_current_wechat_version
 class LoginView:
-    def __init__(self, page: ft.Page, on_login, on_signup, go_back):
+    def __init__(self, page: ft.Page, controller):
+        self.controller = controller
         self.page = page
-        self.on_login = on_login
-        self.on_signup = on_signup
-        self.on_back = go_back
         self.setup_page()
         self.login_page_ui()
 
@@ -19,7 +17,7 @@ class LoginView:
             )
             self.page.open(dlg)
         else:
-            self.on_login(user, password)
+            self.controller.on_login(user, password)
     
     
     def setup_page(self):
@@ -74,7 +72,7 @@ class LoginView:
 
         bt_criar = ft.TextButton(
             "注册",
-            on_click=lambda _: self.on_signup(),
+            on_click=lambda _: self.controller.on_signup(),
             width=120,
             height=40
         )

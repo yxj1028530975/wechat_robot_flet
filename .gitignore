@@ -5,12 +5,11 @@ __pycache__/
 *$py.class
 .mypy_cache/
 .vscode/
-# assets/dll
 .venv
 config/config.ini
 # C extensions
 *.so
-
+assets/dll/
 # Distribution / packaging
 .Python
 build/

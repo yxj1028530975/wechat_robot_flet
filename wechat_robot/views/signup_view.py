@@ -2,13 +2,12 @@ import flet as ft # type: ignore
 from wechat_robot.utils.ft_utils import create_app_bar
 
 class SignUpView:
-    def __init__(self, page: ft.Page, on_signup, on_back):
+    def __init__(self, page: ft.Page, controller):
+        self.controller = controller
         self.page = page
-        self.on_signup = on_signup
-        self.on_back = on_back
         self.setup_page()
         self.signup_page_ui()
-        self.page.add(create_app_bar("注册", on_back))
+        self.page.add(create_app_bar("注册", self.controller.on_back))
 
 
     def setup_page(self):
@@ -68,7 +67,7 @@ class SignUpView:
 
         bt_signup = ft.ElevatedButton(
             "注册",
-            on_click=lambda e: self.on_signup(tf_firstname.value,  tf_email.value,
+            on_click=lambda e: self.controller.on_signup(tf_firstname.value,  tf_email.value,
                                               tf_telefone.value, tf_password.value, tf_confirmpassword.value),
             width=120,
             height=40

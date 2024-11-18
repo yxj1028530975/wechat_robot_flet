@@ -9,7 +9,7 @@ class LoadController:
     def __init__(self, page: ft.Page, app):   
         self.page = page
         self.app = app
-        self.view = LoadView(page,self.load_start_wechat,self.check_wechat_login_status,self.go_to_main)
+        self.view = LoadView(page,self)
 
     def load_start_wechat(self):
         print("start wechat")
