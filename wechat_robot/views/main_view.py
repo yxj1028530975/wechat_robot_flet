@@ -19,6 +19,10 @@ class MainView:
             destinations=[
                 ft.NavigationRailDestination(icon=ft.icons.GROUP, label="群列表"),
                 ft.NavigationRailDestination(icon=ft.icons.PERSON, label="好友列表"),
+                ft.NavigationRailDestination(icon=ft.icons.PERSON, label="公众号"),
+                ft.NavigationRailDestination(icon=ft.icons.PERSON, label="全局管理"),
+                ft.NavigationRailDestination(icon=ft.icons.PERSON, label="高级功能"),
+                ft.NavigationRailDestination(icon=ft.icons.PERSON, label="应用插件"),
                 # 更多导航项...
             ],
             on_change=self.on_navigation_change,

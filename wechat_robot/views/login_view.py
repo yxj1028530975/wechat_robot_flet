@@ -26,7 +26,7 @@ class LoginView:
         self.page.window.width = 350
         self.page.window.height = 600
         self.page.window.resizable = False
-        self.page.window.always_on_top = True
+        # self.page.window.always_on_top = True
         self.page.title = get_config("wechat_robot","name")
         self.page.vertical_alignment = ft.MainAxisAlignment.CENTER
         self.page.horizontal_alignment = ft.CrossAxisAlignment.CENTER  

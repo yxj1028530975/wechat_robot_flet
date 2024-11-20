@@ -78,7 +78,6 @@ class GroupView:
                     ft.Text("群列表"),
                 ]
             ),
-            # 靠左
         )
 
     # 按钮
@@ -86,7 +85,7 @@ class GroupView:
         ft_find = ft.TextField(
             label="查找",
             autofill_hints=ft.AutofillHint.NAME,
-            text_size=8,
+            text_size=18,
             height=30,
             width=150,
         )
@@ -228,7 +227,7 @@ class GroupView:
         ft_find = ft.TextField(
             label="查找",
             autofill_hints=ft.AutofillHint.NAME,
-            text_size=8,
+            text_size=18,
             height=30,
             width=150,
         )

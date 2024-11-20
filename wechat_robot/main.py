@@ -3,7 +3,10 @@ from wechat_robot.controllers.login_controller import LoginController
 from wechat_robot.controllers.signup_controller import SignUpController
 from wechat_robot.controllers.main_controller import MainController
 from wechat_robot.controllers.load_controller import LoadController
-import sqlite3
+from wechat_robot.models.db_manager import Base, engine
+
+# 创建所有表
+Base.metadata.create_all(bind=engine)
 
 
 class App:

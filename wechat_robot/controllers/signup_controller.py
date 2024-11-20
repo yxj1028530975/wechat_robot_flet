@@ -2,14 +2,14 @@ import flet as ft
 from wechat_robot.views.signup_view import SignUpView
 from wechat_robot.models.user_model import UserModel
 from wechat_robot.utils.ft_utils import msg_erro
-from db_manager import DatabaseManager
+# from wechat_robot.models.db_manager import DatabaseManager
 
 
 class SignUpController:
     def __init__(self, page: ft.Page, app):
         self.page = page
         self.app = app
-        self.db_manager = DatabaseManager()
+        # self.db_manager = DatabaseManager()
         self.view = SignUpView(page, self)
         
     def add_user(self, first_name, last_name, email, phone, password, confirm_password):

@@ -55,7 +55,7 @@ class LoadView:
                             ft.Text("正在加载中...", size=24, color=ft.colors.WHITE),
                             # 增加一个按钮测试
                             ft.CupertinoButton(
-                                content=ft.Text("Filled CupertinoButton", color=ft.colors.YELLOW),
+                                content=ft.Text("启动微信", color=ft.colors.YELLOW),
                                 bgcolor=ft.colors.PRIMARY,
                                 alignment=ft.alignment.top_left,
                                 border_radius=ft.border_radius.all(15),

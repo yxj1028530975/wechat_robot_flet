@@ -12,8 +12,8 @@ def setup_base_page(self):
     self.page.bgcolor = ft.colors.WHITE
     self.page.window.width = get_config("wechat_robot","main_height")
     self.page.window.height = get_config("wechat_robot","main_width")
-    self.page.window.resizable = True
-    self.page.window.always_on_top = True
+    self.page.window.resizable = False
+    self.page.window.always_on_top = False
     self.page.title = get_config("wechat_robot", "name")
 
 def nav_app_bar(title: str) -> ft.AppBar:

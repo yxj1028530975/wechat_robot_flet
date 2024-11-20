@@ -1,12 +1,12 @@
+# 文件路径: /d:/gr_project/wechat_robot_flet/fastapi_server.py
+
 import logging
 import logging.config
 import uvicorn
 import flet.fastapi as flet_fastapi
 import flet as ft
-import threading
-from wechat_robot.main import App
 from typing import Any,Dict
-from wechat_robot.fastapi.fastapi_server import start_api  # 导入新文件中的 start_api 函数
+from wechat_robot.fastapi.wechat_msg import wechat_msg_handle  # 导入新文件中的 start_api 函数
 # # 定义详细的日志配置
 # logging_config = {
 #     "version": 1,
@@ -45,15 +45,20 @@ from wechat_robot.fastapi.fastapi_server import start_api  # 导入新文件中�
 # # 应用日志配置
 # logging.config.dictConfig(logging_config)
 logger = logging.getLogger(__name__)
+# 创建 FastAPI 应用
+app = flet_fastapi.FastAPI()
 
-def main(page: ft.Page):
-    App(page)
-    # 您的 Flet 应用代码
+@app.post("/msg")
+async def rec_msg(data: Dict[str, Any]):
+    # 处理接收到的消息
+    print(data)
+    # logging.info(f"Received message: {data}")
+    wechat_msg_handle(data)
 
-if __name__ == "__main__":
-    # 创建并启动线程来运行 FastAPI 服务器
-    api_thread = threading.Thread(target=start_api, daemon=True)
-    api_thread.start()
-    
-    # 运行 Flet 桌面应用程序
-    ft.app(target=main, view=ft.AppView.FLET_APP,assets_dir="assets")
+# 在后台运行 FastAPI 服务器的函数
+def start_api():
+    try:
+        logger.info("Starting FastAPI server...")
+        uvicorn.run(app, host="127.0.0.1", port=9000)
+    except Exception as e:
+        logger.error(f"Error starting FastAPI: {e}")
