@@ -75,7 +75,7 @@ def check_port_in_use(port: int) -> bool:
             for conn in psutil.net_connections(kind='inet')
         )
     except Exception as e:
-        logger.error(f"检查端��� {port} 时发生错误: {e}")
+        logger.error(f"检查端口 {port} 时发生错误: {e}")
         return False
 
 #从30001-30100中找到一个没有被占用的端口
@@ -97,12 +97,12 @@ def start_wechat_command(port:str) -> Optional[str]:
         Optional[str]: 启动命令字符串，如果未找到可用端口则返回 None。
     """
 
-    
-    key = get_config("wechat", "key")
-    print(f"key: {key}")
-    if key is None:
-        logger.error("获取配置项 'wechat' 中的 'key' 失败。")
-        return None
+    # TODO 专业版
+    # key = get_config("wechat", "key")
+    # print(f"key: {key}")
+    # if key is None:
+    #     logger.error("获取配置项 'wechat' 中的 'key' 失败。")
+    #     return None
     
     exe_path = get_inject_tool_dir()
     print(f"exe_path: {exe_path}")
@@ -110,7 +110,8 @@ def start_wechat_command(port:str) -> Optional[str]:
         logger.error("获取 inject_tool.exe 路径失败。")
         return None
     
-    return f"{exe_path} start {port} --key={key}"
+    # return f"{exe_path} start {port} --key={key}"
+    return f"{exe_path} start {port}"
 
 # 获取微信hook启动命令
 def start_wechat() -> Optional[str]:
