@@ -12,7 +12,6 @@ class LoadController:
         self.view = LoadView(page,self)
 
     def load_start_wechat(self):
-        print("start wechat")
         return start_wechat()
     def go_to_main(self):
         self.app.navigate("/main")
@@ -29,7 +28,6 @@ class LoadController:
         # 实现您的登录状态检查逻辑，例如：
         # 通过请求本地服务器接口，或者检查特定的进程或文件。
         # 这里提供一个示例，实际实现需根据您的项目需求。
-
 
         http_client = HttpxHandle(base_url=f"http://127.0.0.1:{port}", timeout=1)
 

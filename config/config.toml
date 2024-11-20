@@ -1,0 +1,19 @@
+[wechat]
+version = "3.9.10.19"
+port = "30001"
+
+[wechat_robot]
+name = "智微助手(1.0.1)"
+main_height = 1280
+main_width = 720
+
+[fastapi]
+port = "9000"
+
+[group_template]
+out_setting = "╒══退 群 提 示══╗╘══【温 馨 提 示】══╝"
+out_setting_tip = "退群提醒只支持文字、emoji表情,换行in或[enter群用户:[name]"
+welcome_setting = "╒══进 群 提 示══╗\n启禀群主,有一新人入群\n昵 称：[name]\n领路人：[inviter]\n发送 功能 即可获取功能列表!\n╘══【温 馨 提 示】══╝"
+welcome_setting_tip = "新人进群提醒只支持文字、emoji表情,换行in或[enter群用户:[name]"
+fun_setting = "╒══功能提示══╗"
+fun_setting_tip = "功能提示只支持文字、emoji表情,换行in或[enter群用户:[name]"

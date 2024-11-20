@@ -22,11 +22,13 @@ def welcome_msg_handle(data):
     inviter = data["content"].split('"')[3]
     if group := GroupCRUD.get_group_by_id(group_id):
         welcome_setting = group.welcome_setting
+        welcome_setting = "\n你好\r你也好"
         print(welcome_setting)
         welcome_setting = welcome_setting.replace("[name]",name).replace("[inviter]",inviter)
-        # 将\n\UE315 替换成换行符
-        welcome_setting = welcome_setting.replace("\\n","\n").replace("\\UE315","\n")
+        # 将\n\UE315 替换成换行符,发送给微信无法换行是
         
     else:
-        welcome_setting = get_config("group_template", "welcome_setting").replace("[name]",name).replace("[inviter]",inviter)
+        welcome_setting = str(get_config("group_template", "welcome_setting").replace("[name]",name).replace("[inviter]",inviter).replace("\n","\n"))
+    # welcome_setting = "\n你好\r你也好"
+
     send_wechat_msg(data["wx_id"],welcome_setting)
