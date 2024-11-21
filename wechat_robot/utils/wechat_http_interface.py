@@ -2,7 +2,7 @@ from wechat_robot.utils.httpx_handle import HttpxHandle
 from wechat_robot.utils.config_utils import get_config
 
 port = get_config("wechat","port")
-http_client = HttpxHandle(base_url=f"http://127.0.0.1:{port}", timeout=5)
+http_client = HttpxHandle(base_url=f"http://127.0.0.1:{port}", timeout=1)
 
 
 def pull_wechat_list(pull_type: int = 1) -> dict:

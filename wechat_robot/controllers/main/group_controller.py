@@ -13,11 +13,42 @@ class GroupController:
         # self.page.add(self.group_view.build())
 
     def init_wechat_list(self):
-        return_data = pull_wechat_list(2)
-        return return_data['data']['list']
+        try:
+            if not (return_data := pull_wechat_list(2)):
+                self.show_error_message("未能获取到群列表，可能是微信掉线或请求失败。请重启软件登陆微信")
+                return []
+            return return_data['data']['list']
+            # 请求成功但未返回预期的数据结构
+            
+        except Exception as e:
+            # 捕获请求失败的异常
+            print(f"请求失败，错误信息：{e}")
+            self.show_error_message("请求失败，无法获取群列表，请检查网络连接或微信状态。请重启软件登陆微信")
+            return []
+
+    def show_error_message(self, message):
+        dlg = ft.AlertDialog(
+            modal=True,
+            title=ft.Text("错误"),
+            content=ft.Text(message),
+            actions=[
+                ft.TextButton("确定", on_click=self.close_dialog)
+            ],
+            actions_alignment=ft.MainAxisAlignment.END,
+        )
+        self.page.overlay.append(dlg)
+        dlg.open = True
+        self.page.update()
+
+    def close_dialog(self, e):
+        e.control.parent.open = False
+        self.page.update()
 
     def view_pull_wechat_list(self):
         return_data = pull_wechat_list(2)
+        if not (return_data := pull_wechat_list(2)):
+            self.show_error_message("未能获取到群列表，可能是微信掉线或请求失败。请重启软件登陆微信")
+            return []
         self.group_list = return_data['data']['list']
         self.update_group_list(return_data['data']['list'])
 
