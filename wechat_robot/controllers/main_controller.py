@@ -1,6 +1,6 @@
 import flet as ft
 from wechat_robot.views.main_view import MainView
-from wechat_robot.controllers.main.group_controller import GroupController
+from wechat_robot.controllers.group.group_controller import GroupController
 
 class MainController:
     def __init__(self, page: ft.Page,app):

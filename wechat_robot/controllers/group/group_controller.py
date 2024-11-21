@@ -2,7 +2,7 @@
 import flet as ft
 from wechat_robot.views.group.group_view import GroupView
 from wechat_robot.utils.wechat_http_interface import pull_wechat_list, pull_wechat_list_members
-from wechat_robot.controllers.main.group_setting_controller import GroupSettingController
+from wechat_robot.controllers.group.group_setting_controller import GroupSettingController
 
 class GroupController:
     def __init__(self, page: ft.Page):
@@ -18,8 +18,6 @@ class GroupController:
                 self.show_error_message("未能获取到群列表，可能是微信掉线或请求失败。请重启软件登陆微信")
                 return []
             return return_data['data']['list']
-            # 请求成功但未返回预期的数据结构
-            
         except Exception as e:
             # 捕获请求失败的异常
             print(f"请求失败，错误信息：{e}")
@@ -99,7 +97,7 @@ class GroupController:
 
 
     def open_group_setting(self, ft_group_list_data_line, data):
-        self.on_click_group_list(ft_group_list_data_line, data)
+        # self.on_click_group_list(ft_group_list_data_line, data)
     # 从当前选中的群中获取参数，例如群ID和群名称
         group_id = self.group_view.group_id
         group_name = self.group_view.group_name

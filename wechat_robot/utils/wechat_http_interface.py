@@ -35,3 +35,13 @@ def send_wechat_msg(wx_id:str,msg:str):
     return http_client.request(
         "POST", "/api", json_data={"type": 7, "wx_id": wx_id, "msg": msg}
     )
+    
+def search_wxid_info(wx_id:str) ->dict:
+    """
+    根据wxid搜索用户信息
+    :param wx_id: 微信id
+    :return:
+    """
+    return http_client.request(
+        "POST", "/api", json_data={"type": 19, "wx_id": wx_id}
+    )

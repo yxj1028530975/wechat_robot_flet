@@ -111,8 +111,8 @@ class GroupView:
                 controls=[
                     ft.Container(width=10),
                     ft.Container(content=ft.Text("序号"), width=100),
-                    ft.Container(content=ft.Text("群名称"), width=120),
-                    ft.Container(content=ft.Text("群ID"), width=200),
+                    ft.Container(content=ft.Text("群名称",selectable=True), width=120),
+                    ft.Container(content=ft.Text("群ID",selectable=True), width=200),
                 ],
                 spacing=0,
             ),
@@ -140,6 +140,9 @@ class GroupView:
 
     def group_list_data_line(self, data, index):
         # 每行增加边框
+        def check_item_clicked(e):
+            e.control.checked = not e.control.checked
+            self.page.update()
         ft_check = ft.Checkbox(label=index, value=False)
         ft_nick_name = ft.Text(data["nick_name"], size=20)
         ft_wx_id = ft.Text(data["wx_id"], size=20)
@@ -151,6 +154,27 @@ class GroupView:
                                 ft_group_list_data_line,data
                             ),
                         )
+        pb = ft.PopupMenuButton(
+            items=[
+                ft.PopupMenuItem(text="开启"),
+                # ft.PopupMenuItem(icon=ft.icons.POWER_INPUT, text="Check power"),
+                ft.PopupMenuItem(
+                    content=ft.Row(
+                        [
+                            ft.Icon(ft.icons.HOURGLASS_TOP_OUTLINED),
+                            ft.Text("激活"),
+                        ]
+                    ),
+                    on_click=lambda _: print("Button with a custom content clicked!"),
+                ),
+                ft.PopupMenuItem(),  # divider
+                ft.PopupMenuItem(
+                    text="群设置", checked=False, on_click=lambda e: self.controller.open_group_setting(
+                                ft_group_list_data_line,data
+                            ),
+                ),
+            ],on_open=lambda e: self.controller.on_click_group_list(ft_group_list_data_line, data)
+        )
         ft_group_list_data_line = ft.Container(
             content=ft.Row(
                 controls=[
@@ -170,7 +194,7 @@ class GroupView:
                         content=ft_wx_id, width=200, height=30
                     ),
                     ft.Container(
-                        content=ft_bt, width=80, height=30
+                        content=pb, width=80, height=30
                     ),
                     # ft.Container(content=ft.Text(data['status'], size=10), width=100),
                 ],
@@ -251,8 +275,8 @@ class GroupView:
                 controls=[
                     ft.Container(width=20),
                     ft.Container(content=ft.Text("序号"), width=100),
-                    ft.Container(content=ft.Text("昵称"), width=120),
-                    ft.Container(content=ft.Text("wxid"), width=100),
+                    ft.Container(content=ft.Text("昵称",selectable=True), width=120),
+                    ft.Container(content=ft.Text("wxid",selectable=True), width=100),
                     # ft.Container(content=ft.Text("管理员"), width=100),
                 ],
                 spacing=0,
