@@ -8,6 +8,7 @@ class GroupSettingController:
         self.page = page
         self.group_id = group_id
         self.group_name = group_name
+        self.group_crud = GroupCRUD()
         self.out_setting = ''
         self.welcome_setting = ''
         self.fun_setting = ''
@@ -27,7 +28,7 @@ class GroupSettingController:
     
     # 初始化数据
     def init_data(self):
-        if existing_group := GroupCRUD.get_group_by_id(self.group_id):
+        if existing_group := self.group_crud.get_group_by_id(self.group_id):
             self.out_setting = existing_group.out_setting
             self.welcome_setting = existing_group.welcome_setting
             self.fun_setting = existing_group.fun_setting
@@ -39,7 +40,7 @@ class GroupSettingController:
                 'welcome_setting': self.welcome_setting,
                 'fun_setting': self.fun_setting,
             }
-            GroupCRUD.add_group(data)
+            self.group_crud.add_group(data)
     # 保存群设置
     def save_group_setting(self):
         group_data = {
@@ -49,6 +50,6 @@ class GroupSettingController:
             'welcome_setting': self.group_setting_view.tf_welcome_group_setting.content.controls[0].content.controls[1].value,
             'fun_setting': self.group_setting_view.tf_fun_group_setting.content.controls[0].content.controls[1].value,
         }
-        GroupCRUD.update_group(self.group_id, group_data)
+        self.group_crud.update_group(self.group_id, group_data)
         self.group_setting_view.show_success()
         

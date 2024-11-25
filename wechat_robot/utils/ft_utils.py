@@ -8,6 +8,12 @@ def create_app_bar(title: str, go_back: callable = None) -> ft.AppBar:
     return ft.AppBar(title=ft.Text(title), leading=bt_back)
 
 def setup_base_page(self):
+    self.page.fonts = {
+            "alifont": "/fonts/AlibabaPuHuiTi-3-55-Regular.ttf",
+        }
+    self.page.theme = ft.Theme(
+        font_family="alifont",
+    )
     self.page.controls.clear()
     self.page.bgcolor = ft.colors.WHITE
     self.page.window.width = get_config("wechat_robot","main_height")

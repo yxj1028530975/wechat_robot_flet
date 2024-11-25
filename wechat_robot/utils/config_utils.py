@@ -33,7 +33,7 @@ def get_inject_tool_dir() -> str:
         str: assets\\dll\\inject_tool.exe 目录的绝对路径。
     """
     # 获取脚本执行的根路径
-    return os.path.join(project_root, 'assets', 'dll', 'inject_tool.exe')
+    return os.path.join(project_root, 'assets', 'dll', 'start_wechat.exe')
 
 # 获取配置文件中的配置
 def get_config(section: str = 'wechat',option: str = 'version') -> Optional[str]:

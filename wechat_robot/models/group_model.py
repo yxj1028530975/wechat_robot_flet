@@ -8,6 +8,7 @@ class Group(Base):
 
     group_id = Column(String, primary_key=True, unique=True, index=True)
     group_name = Column(String)
+    status = Column(String)
     out_setting = Column(Text)
     welcome_setting = Column(Text)
     fun_setting = Column(Text)
@@ -68,5 +69,13 @@ class GroupCRUD:
         except Exception as e:
             session.rollback()
             print(f"删除群组失败：{e}")
+        finally:
+            session.close()
+    # 获取所有群组，以列表形式返回
+    @staticmethod
+    def get_all_group():
+        session = SessionLocal()
+        try:
+            return session.query(Group).all()
         finally:
             session.close()

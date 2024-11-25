@@ -126,7 +126,7 @@ class GroupSettingView:
                 ],
                 # alignment=ft.MainAxisAlignment.END  # 水平右对齐
             ),
-            # height=400,
+            height=450,
             # alignment=ft.alignment.bottom_right,    # 垂直底部对齐
             padding=ft.padding.all(10),
         )
@@ -162,7 +162,7 @@ class GroupSettingView:
             ),
             # height=400,
             # alignment=ft.alignment.bottom_right,    # 垂直底部对齐
-            padding=ft.padding.all(10),
+            # padding=ft.padding.all(10),
         )
 
     # 群内提醒界面标题

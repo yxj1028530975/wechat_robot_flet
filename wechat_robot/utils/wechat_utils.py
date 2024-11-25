@@ -107,11 +107,11 @@ def start_wechat_command(port:str) -> Optional[str]:
     exe_path = get_inject_tool_dir()
     print(f"exe_path: {exe_path}")
     if exe_path is None:
-        logger.error("获取 inject_tool.exe 路径失败。")
+        logger.error("获取 start_wechat.exe 路径失败。")
         return None
     
     # return f"{exe_path} start {port} --key={key}"
-    return f"{exe_path} start {port}"
+    return f"{exe_path}  {port}"
 
 # 获取微信hook启动命令
 def start_wechat() -> Optional[str]:

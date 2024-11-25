@@ -6,6 +6,7 @@ port = "30001"
 name = "智微助手(1.0.1)"
 main_height = 1280
 main_width = 720
+group_switch = 1
 
 [fastapi]
 port = "9000"

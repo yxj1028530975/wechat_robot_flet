@@ -5,7 +5,6 @@ import flet.fastapi as flet_fastapi
 import flet as ft
 import threading
 from wechat_robot.main import App
-from typing import Any,Dict
 from wechat_robot.fastapi.fastapi_server import start_api  # 导入新文件中的 start_api 函数
 # # 定义详细的日志配置
 # logging_config = {
