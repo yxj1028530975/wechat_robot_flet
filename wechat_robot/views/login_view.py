@@ -45,7 +45,7 @@ class LoginView:
 
         tf_user = ft.TextField(
             label='用户名',
-            hint_text='密码',
+            hint_text='用户名',
             height=40,
             width=400,
             text_size=12,

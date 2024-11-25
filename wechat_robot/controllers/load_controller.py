@@ -31,9 +31,13 @@ class LoadController:
 
         http_client = HttpxHandle(base_url=f"http://127.0.0.1:{port}", timeout=1)
 
-        if response := http_client.request(
-            "POST", "/api", json_data={"type": 1}
-        ):
+        try:
+            response = http_client.request("POST", "/api", json_data={"type": 1})
+        except Exception as e:
+            logger.error(f"请求发生异常：{e}")
+            return False
+        else:
+            # 处理响应
             logger.info(f"返回数据： {response}")
             data = response.get("data")
             if isinstance(data, dict):
@@ -44,6 +48,4 @@ class LoadController:
                     logger.error(f"响应中的 'status' 类型错误，期待 int 类型，但收到 {type(status)} 类型。")
             else:
                 logger.error("响应中的 'data' 字段为空或格式不正确。")
-        else:
-            logger.error("请求失败或响应为空。")
         return False
