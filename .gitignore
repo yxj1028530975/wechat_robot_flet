@@ -9,7 +9,6 @@ __pycache__/
 #config/config.ini
 # C extensions
 *.so
-assets/dll/
 # Distribution / packaging
 .Python
 build/
