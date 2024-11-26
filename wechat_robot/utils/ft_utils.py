@@ -1,6 +1,6 @@
 import flet as ft
 from wechat_robot.utils.config_utils import get_config      
-
+from wechat_robot.utils.windows_info import get_windows_info
 def create_app_bar(title: str, go_back: callable = None) -> ft.AppBar:
     bt_back = ft.IconButton(
         icon=ft.icons.ARROW_BACK, on_click=go_back, width=120, height=50
@@ -8,6 +8,9 @@ def create_app_bar(title: str, go_back: callable = None) -> ft.AppBar:
     return ft.AppBar(title=ft.Text(title), leading=bt_back)
 
 def setup_base_page(self):
+    
+    screen_width, screen_height = get_windows_info()
+    
     self.page.fonts = {
             "alifont": "/fonts/AlibabaPuHuiTi-3-55-Regular.ttf",
         }
@@ -15,6 +18,7 @@ def setup_base_page(self):
         font_family="alifont",
     )
     self.page.controls.clear()
+    self.page.window.center()
     self.page.bgcolor = ft.colors.WHITE
     self.page.window.width = get_config("wechat_robot","main_height")
     self.page.window.height = get_config("wechat_robot","main_width")

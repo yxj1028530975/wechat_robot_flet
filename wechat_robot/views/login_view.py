@@ -22,10 +22,15 @@ class LoginView:
     
     def setup_page(self):
         self.page.controls.clear()
+        self.page.window.center()
         self.page.bgcolor = ft.colors.WHITE
         self.page.window.width = 350
         self.page.window.height = 600
+        # self.page.window.left = 1000  # 窗口左边距
+        # self.page.window.top = 500    # 窗口上边距
         self.page.window.resizable = False
+        # self.page.window.center()
+        # self.page.window.icon = "wechat.ico"
         # self.page.window.always_on_top = True
         self.page.title = get_config("wechat_robot","name")
         self.page.vertical_alignment = ft.MainAxisAlignment.CENTER
