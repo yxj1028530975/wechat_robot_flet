@@ -7,9 +7,9 @@ class GroupView:
         # self.view_pull_wechat_list = view_pull_wechat_list
         self.selected_row = None
         self.group_list = self.controller.group_list
-        self.member_list = []
-        self.group_name = ""
-        self.group_id = ""
+        self.member_list = self.controller.group_members_list
+        self.group_name = self.controller.group_name
+        self.group_id = self.controller.group_id
 
     def build(self):
         # 构建群列表视图和群成员视图
@@ -24,7 +24,6 @@ class GroupView:
 
         self.group_list_view = self.build_group_list_view()
         self.group_member_view = self.build_group_member_view()
-
         # 返回整个群组视图
         return ft.Tabs(
             selected_index=0,
@@ -146,15 +145,11 @@ class GroupView:
 
         ft_check = ft.Checkbox(label=index, value=False)
         ft_nick_name = ft.Text(data["nick_name"], size=20)
-        ft_status = ft.Text(data["status"], size=20)
+        # ft_status = ft.Text(data["status"], size=20)
+        ft_status = ft.Container(content=ft.Text(data["status"], size=20, width=200, height=30))
         pb = ft.PopupMenuButton(
             items=[
-                ft.PopupMenuItem(text="开启/关闭"),
-                # ft.PopupMenuItem(icon=ft.icons.POWER_INPUT, text="Check power"),
-                # ft.PopupMenuItem(
-                #     text="激活",
-                #     on_click=lambda _: print("Button with a custom content clicked!"),
-                # ),
+                ft.PopupMenuItem(text="开启/关闭", on_click=lambda e: self.controller.open_or_close(ft_status, data)),
                 ft.PopupMenuItem(),  # divider
                 ft.PopupMenuItem(
                     text="群设置",
@@ -180,7 +175,7 @@ class GroupView:
                         height=60,
                         alignment=ft.alignment.center_left,
                     ),
-                    ft.Container(content=ft_status, width=200, height=30),
+                    ft_status,
                     ft.Container(content=pb, width=80, height=30),
                     # ft.Container(content=ft.Text(data['status'], size=10), width=100),
                 ],

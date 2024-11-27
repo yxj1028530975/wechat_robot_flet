@@ -1,6 +1,5 @@
 from sqlalchemy import Column, String, Text
 from .db_manager import Base
-from sqlalchemy.orm import Session
 from .db_manager import SessionLocal
 
 class Group(Base):
@@ -77,5 +76,22 @@ class GroupCRUD:
         session = SessionLocal()
         try:
             return session.query(Group).all()
+        finally:
+            session.close()
+            
+    # 更新群状态
+    @staticmethod
+    def update_group_status(group_id, status):
+        session = SessionLocal()
+        try:
+            group = session.query(Group).filter(Group.group_id == group_id).first()
+            if group:
+                group.status = status
+                session.commit()
+            else:
+                print("群组不存在")
+        except Exception as e:
+            session.rollback()
+            print(f"更新群状态失败：{e}")
         finally:
             session.close()

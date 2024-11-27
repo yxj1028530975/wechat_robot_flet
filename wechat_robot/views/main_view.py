@@ -21,13 +21,13 @@ class MainView:
                 ft.NavigationRailDestination(icon=ft.icons.PERSON, label="好友列表"),
                 # 公众号
                 ft.NavigationRailDestination(icon=ft.icons.PUBLIC, label="公众号"),
-                
+                ft.NavigationRailDestination(icon=ft.icons.SETTINGS, label="全局设置"),
                 # 应用功能
-                ft.NavigationRailDestination(icon=ft.icons.APPS, label="应用功能"),
+                ft.NavigationRailDestination(icon=ft.icons.APPS, label="应用插件"),
                 # 高级插件,没有PLUGIN
                 # ft.NavigationRailDestination(icon=ft.icons.PLUGIN, label="高级插件"),
                 # 全局管理
-                ft.NavigationRailDestination(icon=ft.icons.SETTINGS, label="全局设置"),
+                
                 
 
                 # 更多导航项...

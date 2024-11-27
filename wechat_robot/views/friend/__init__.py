@@ -1,0 +1,1 @@
+from . import friend_view

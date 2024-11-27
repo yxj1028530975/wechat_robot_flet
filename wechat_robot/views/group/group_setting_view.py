@@ -124,10 +124,8 @@ class GroupSettingView:
                     self.tf_welcome_group_setting,
                     self.tf_fun_group_setting,
                 ],
-                # alignment=ft.MainAxisAlignment.END  # 水平右对齐
             ),
             height=450,
-            # alignment=ft.alignment.bottom_right,    # 垂直底部对齐
             padding=ft.padding.all(10),
         )
 
