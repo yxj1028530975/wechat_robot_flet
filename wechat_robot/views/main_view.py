@@ -1,5 +1,7 @@
 import flet as ft
 from wechat_robot.utils.ft_utils import setup_base_page
+
+
 class MainView:
     def __init__(self, page: ft.Page, controller):
         self.page = page
@@ -19,30 +21,51 @@ class MainView:
             destinations=[
                 ft.NavigationRailDestination(icon=ft.icons.GROUP, label="群列表"),
                 ft.NavigationRailDestination(icon=ft.icons.PERSON, label="好友列表"),
-                # 公众号
                 ft.NavigationRailDestination(icon=ft.icons.PUBLIC, label="公众号"),
                 ft.NavigationRailDestination(icon=ft.icons.SETTINGS, label="全局设置"),
-                # 应用功能
                 ft.NavigationRailDestination(icon=ft.icons.APPS, label="应用插件"),
-                # 高级插件,没有PLUGIN
-                # ft.NavigationRailDestination(icon=ft.icons.PLUGIN, label="高级插件"),
-                # 全局管理
-                
-                
-
-                # 更多导航项...
             ],
+            height=500,
+            width=130,
             on_change=self.on_navigation_change,
         )
         # 主布局
         return ft.Row(
             [
-                rail,
+                ft.Column(
+                    alignment=ft.MainAxisAlignment.END,
+                    controls=[rail, self.show_logo_name()],
+                ),
+                # rail,
                 ft.VerticalDivider(width=1),
                 self.content,  # 确保 self.content 被添加到布局中
             ],
             expand=True,
         )
+
+    def show_logo_name(self):
+        ft_img = ft.Image(
+            src=f"https://wx.qlogo.cn/mmhead/ver_1/AYb2dqzgrc5qiaXsHnRu715eajHXXAsYxJCBice2ib3YJrPbw5DQJQVPEoP5RoolrDvs3gTdbmOC85Q9Zh2R6cvoPdEfOqbyklIxzuZvJ4AORVWL2QoibEUibrGxLGoLCepggibL6h5JeeFsJeW4pfoLue3g/0",
+            width=50,
+            height=50,
+            border_radius=ft.border_radius.all(50),
+        )
+        #
+        bag = ft.Badge(content=ft_img, text="智微")
+
+        left_bottom_user = ft.Container(
+            alignment=ft.alignment.bottom_center,
+            width=130,
+            height=150,
+            content=ft.Column(
+                alignment=ft.MainAxisAlignment.END,
+                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                controls=[bag, ft.Text("木不易成楊！", size=10)],
+                spacing=2,
+            ),
+            # bgcolor=ft.colors.BLUE
+        )
+        return left_bottom_user
 
     def on_navigation_change(self, e):
         old_index = self.selected_index

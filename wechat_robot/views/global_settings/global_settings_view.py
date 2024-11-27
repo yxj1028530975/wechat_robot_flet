@@ -27,7 +27,6 @@ class GlobalSettingsView:
                     {"name": "自动进群", "id": 24, "path": "/auto_join_group", "icon":"WINDOW_OUTLINED"},
                     {"name": "群黑名单", "id": 25, "path": "/group_blacklist", "icon":"WINDOW_OUTLINED"},
                     {"name": "群聊设置", "id": 26, "path": "/group_chat_settings", "icon":"WINDOW_OUTLINED"},
-                    {"name": "更新功能", "id": 27, "path": "/update_function", "icon":"WINDOW_OUTLINED"},
                 ],
             },
             {
@@ -40,7 +39,6 @@ class GlobalSettingsView:
                     {"name": "邀请进群", "id": 34, "path": "/invite_group", "icon":"WINDOW_OUTLINED"},
                     {"name": "好友进群", "id": 35, "path": "/friend_join_group", "icon":"WINDOW_OUTLINED"},
                     {"name": "私聊设置", "id": 36, "path": "/feed_settings", "icon":"WINDOW_OUTLINED"},
-                    {"name": "更新昵称", "id": 37, "path": "/update_nickname", "icon":"WINDOW_OUTLINED"},
                 ],
             },
         ]
