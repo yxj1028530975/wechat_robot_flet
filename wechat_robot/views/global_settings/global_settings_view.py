@@ -70,7 +70,7 @@ class GlobalSettingsView:
     def global_settings_title(self, title):
         return ft.Column(
             controls=[
-                ft.Text(title, size=20, weight="bold"),
+                ft.Text(title, weight="bold"),
                 ft.Container(
                     height=1,
                     bgcolor=ft.colors.BLACK,
@@ -96,8 +96,8 @@ class GlobalSettingsView:
             
     # 单个应用
     def global_settings_app(self, data):
-        ft_icon = ft.Icon(name=getattr(ft.icons, data['icon']), size=50)
-        ft_text = ft.Text(data['name'], size=16)
+        ft_icon = ft.Icon(name=getattr(ft.icons, data['icon']), size=60)
+        ft_text = ft.Text(data['name'])
         return ft.Container(
             content=ft.Column(
                 controls=[
@@ -107,8 +107,8 @@ class GlobalSettingsView:
                 alignment=ft.MainAxisAlignment.CENTER,          # 垂直居中
                 horizontal_alignment=ft.CrossAxisAlignment.CENTER,  # 水平居中
             ),
-            width=120,
-            height=120,
+            width=150,
+            height=150,
             padding=10,
             border=ft.border.all(1, ft.colors.GREY),
             border_radius=ft.border_radius.all(8),

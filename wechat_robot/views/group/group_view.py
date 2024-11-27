@@ -46,8 +46,8 @@ class GroupView:
                     content=ft.Text("This is Tab 4"),
                 ),
             ],
-            expand=1,
-            height=600,
+            expand=True,
+            # height=600,
             width=1100,
         )
 
@@ -63,10 +63,10 @@ class GroupView:
                 ]
             ),
             height=600,
-            width=550,
+            width=540,
             padding=10,
             # 增加边框
-            border=ft.border.all(1, ft.colors.GREY),
+            border=ft.border.all(1, ft.colors.BLACK87),
         )
 
     # 第一行标题,靠左
@@ -108,45 +108,59 @@ class GroupView:
         return ft.Container(
             content=ft.Row(
                 controls=[
-                    ft.Container(width=10),
-                    ft.Container(content=ft.Text("序号"), width=100),
-                    ft.Container(content=ft.Text("群名称", selectable=True), width=120),
-                    ft.Container(content=ft.Text("群状态", selectable=True), width=200),
+                    ft.Container(ft.Text("序号", weight=ft.FontWeight.BOLD), expand=1),
+                    ft.Container(
+                        ft.Text("群名称", weight=ft.FontWeight.BOLD), expand=4
+                    ),
+                    ft.Container(
+                        ft.Text("群状态", weight=ft.FontWeight.BOLD), expand=1
+                    ),
+                    ft.Container(ft.Text("", weight=ft.FontWeight.BOLD), expand=1),
                 ],
-                spacing=0,
+                alignment=ft.MainAxisAlignment.CENTER,
             ),
-            width=500,
+            padding=ft.padding.only(bottom=5),
+            border=ft.border.only(bottom=ft.BorderSide(1, ft.colors.BLACK87)),
         )
 
     # 群列表数据
     def group_list_data(self):
-        self.ft_lv = ft.ListView(expand=1, padding=1)
-        count = 1
+        self.ft_lv = ft.ListView(expand=1, padding=5)
         # 生成测试数据，序号，昵称，备注
-        for index, i in enumerate(self.group_list):
-            self.ft_lv.controls.append(self.group_list_data_line(i, index))
-            count += 1
+        for index, data in enumerate(self.group_list):
+            self.ft_lv.controls.append(self.group_list_data_line(data, index))
         return ft.Container(
-            height=430,
-            width=550,
-            content=ft.Column(
-                controls=[
-                    self.ft_lv,
-                ],
-            ),
-            border=ft.border.all(1, ft.colors.GREY),
+            expand=True,
+            content=self.ft_lv,
+            border=ft.border.all(1, ft.colors.BLACK87),
+            border_radius=ft.border_radius.all(5),
         )
+        # ft.Container(
+        #     height=430,
+        #     width=550,
+        #     content=ft.Column(
+        #         controls=[
+        #             self.ft_lv,
+        #         ],
+        #     ),
+        #     border=ft.border.all(1, ft.colors.GREY),
+        # )
 
     def group_list_data_line(self, data, index):
         # 每行增加边框
-        def check_item_clicked(e):
-            e.control.checked = not e.control.checked
-            self.page.update()
-
-        ft_check = ft.Checkbox(label=index, value=False)
-        ft_nick_name = ft.Text(data["nick_name"], size=20)
+        ft_index = ft.Container(
+            content=ft.Row(
+                controls=[
+                    ft.Checkbox(value=False),
+                    ft.Text(str(index)),
+                ],
+                alignment=ft.MainAxisAlignment.START,
+            ),
+            expand=1,
+        )
+        ft_nick_name = ft.Container(ft.Text(data["nick_name"]), expand=4)
         # ft_status = ft.Text(data["status"], size=20)
-        ft_status = ft.Container(content=ft.Text(data["status"], size=20, width=200, height=30))
+        ft_status = ft.Container(content=ft.Text(data["status"], expand=1))
         pb = ft.PopupMenuButton(
             items=[
                 ft.PopupMenuItem(text="开启/关闭", on_click=lambda e: self.controller.open_or_close(ft_status, data)),
@@ -160,30 +174,23 @@ class GroupView:
                 ft_group_list_data_line, data
             ),
         )
+        ft_action = ft.Container(content=pb, expand=1)
         ft_group_list_data_line = ft.Container(
             content=ft.Row(
                 controls=[
-                    ft.Container(
-                        content=ft_check,
-                        width=50,
-                        height=30,
-                        alignment=ft.alignment.center_left,
-                    ),
-                    ft.Container(
-                        content=ft_nick_name,
-                        width=150,
-                        height=60,
-                        alignment=ft.alignment.center_left,
-                    ),
+                    ft_index,
+                    ft_nick_name,
                     ft_status,
-                    ft.Container(content=pb, width=80, height=30),
+                    ft_action,
                     # ft.Container(content=ft.Text(data['status'], size=10), width=100),
                 ],
             ),  # 绑定点击事件处理函数
+            padding=ft.padding.symmetric(vertical=5),
             on_click=lambda e: self.controller.on_click_group_list(
                 ft_group_list_data_line, data
             ),
-            border=ft.border.all(1, ft.colors.GREY),
+            ink=True,
+            border=ft.border.only(bottom=ft.BorderSide(1, ft.colors.BLACK87)),
         )
         return ft_group_list_data_line
 
@@ -199,17 +206,17 @@ class GroupView:
                 ]
             ),
             height=600,
-            width=550,
+            width=540,
             padding=10,
             # 增加边框
-            border=ft.border.all(1, ft.colors.GREY),
+            border=ft.border.all(1, ft.colors.BLACK87),
         )
 
     # 群成员标题
     def group_member_title(self):
 
         self.group_member_text = ft.Text(
-            f"[群名称:{self.group_name}]", color=ft.colors.RED_500
+            f"[群名称:{self.group_name}]", color=ft.colors.RED_800
         )
         return ft.Container(
             content=ft.Row(
@@ -217,16 +224,15 @@ class GroupView:
                     ft.Container(
                         ft.Text("群成员"),
                         alignment=ft.alignment.center_left,
-                        width=200,
+                        expand=1,
                     ),
                     ft.Container(
                         self.group_member_text,
                         alignment=ft.alignment.center_left,
-                        width=300,
+                        expand=3,
                     ),
                 ]
             ),
-            width=550,
         )
 
     # 按钮
@@ -256,60 +262,54 @@ class GroupView:
         return ft.Container(
             content=ft.Row(
                 controls=[
-                    ft.Container(width=20),
-                    ft.Container(content=ft.Text("序号"), width=100),
-                    ft.Container(content=ft.Text("昵称", selectable=True), width=120),
-                    ft.Container(content=ft.Text("wxid", selectable=True), width=100),
-                    # ft.Container(content=ft.Text("管理员"), width=100),
+                    ft.Container(ft.Text("序号", weight=ft.FontWeight.BOLD), expand=1),
+                    ft.Container(ft.Text("昵称", weight=ft.FontWeight.BOLD), expand=3),
+                    ft.Container(ft.Text("状态", weight=ft.FontWeight.BOLD), expand=1),
                 ],
-                # spacing=0,
+                alignment=ft.MainAxisAlignment.START,
             ),
+            padding=ft.padding.only(bottom=5),
+            border=ft.border.only(bottom=ft.BorderSide(1, ft.colors.BLACK87)),
         )
 
     # 群成员数据
     def group_member_data(self):
-        self.ft_lv_member_list = ft.ListView(expand=1, padding=1)
-        count = 1
+        self.ft_lv_member_list = ft.ListView(expand=True, padding=1)
         # 生成测试数据，序号，昵称，备注
-        for index, i in enumerate(self.member_list):
+        for index, data in enumerate(self.member_list):
             self.ft_lv_member_list.controls.append(
-                self.group_member_data_line(i, index)
+                self.group_member_data_line(data, index)
             )
-            count += 1
         return ft.Container(
-            height=430,
-            width=550,
-            content=ft.Column(
-                [
-                    self.ft_lv_member_list,
-                ],
-            ),
-            border=ft.border.all(1, ft.colors.GREY),
+            expand=True,
+            content=self.ft_lv_member_list,
+            border=ft.border.all(1, ft.colors.BLACK87),
+            border_radius=ft.border_radius.all(5),
         )
 
     def group_member_data_line(self, data, index):
+        ft_index = ft.Container(
+            content=ft.Row(
+                controls=[
+                    ft.Checkbox(value=False),
+                    ft.Text(str(index)),
+                ],
+                alignment=ft.MainAxisAlignment.START,
+            ),
+            expand=1,
+        )
+        ft_nick_name = ft.Container(ft.Text(data.get("nick_name", "")), expand=3)
+        ft_wx_id = ft.Container(ft.Text("开启"), expand=1)
         return ft.Container(
             content=ft.Row(
                 controls=[
-                    ft.Container(
-                        content=ft.Checkbox(label=index, value=False),
-                        width=50,
-                        height=30,
-                    ),
-                    ft.Container(
-                        content=ft.Text(data["nick_name"], size=20),
-                        width=150,
-                        height=60,
-                        alignment=ft.alignment.center_left,
-                    ),
-                    ft.Container(
-                        content=ft.Text(data["wx_id"], size=20),
-                        width=200,
-                        height=60,
-                        alignment=ft.alignment.center_left,
-                    ),
+                    ft_index,
+                    ft_nick_name,
+                    ft_wx_id,
                     # ft.Container(content=ft.Text(data['admin'], size=10), width=100),
                 ],
             ),
-            border=ft.border.all(1, ft.colors.GREY),
+            padding=ft.padding.symmetric(vertical=5),
+            ink=True,
+            border=ft.border.only(bottom=ft.BorderSide(1, ft.colors.BLACK87)),
         )

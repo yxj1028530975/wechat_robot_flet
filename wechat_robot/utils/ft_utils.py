@@ -10,7 +10,7 @@ def create_app_bar(title: str, go_back: callable = None) -> ft.AppBar:
 def setup_base_page(self):
     
     screen_width, screen_height = get_windows_info()
-    
+    print(screen_width, screen_height)
     self.page.fonts = {
             "alifont": "/fonts/AlibabaPuHuiTi-3-55-Regular.ttf",
         }
