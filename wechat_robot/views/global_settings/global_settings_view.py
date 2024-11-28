@@ -37,7 +37,7 @@ class GlobalSettingsView:
                     {"name": "私聊词库", "id": 32, "path": "/private_chat_library", "icon":"WINDOW_OUTLINED"},
                     {"name": "友欢迎语", "id": 33, "path": "/friend_welcome", "icon":"WINDOW_OUTLINED"},
                     {"name": "邀请进群", "id": 34, "path": "/invite_group", "icon":"WINDOW_OUTLINED"},
-                    {"name": "好友进群", "id": 35, "path": "/friend_join_group", "icon":"WINDOW_OUTLINED"},
+                    {"name": "好友审核", "id": 35, "path": "/friend_join_group", "icon":"WINDOW_OUTLINED"},
                     {"name": "私聊设置", "id": 36, "path": "/feed_settings", "icon":"WINDOW_OUTLINED"},
                 ],
             },

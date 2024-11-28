@@ -35,6 +35,30 @@ class Setting(Base):
         default="功能提示只支持文字、emoji表情,换行in或[enter群用户:[name]"
     )
     
+    # 好友审核申请开关
+    friend_verify = Column(
+        Integer,
+        default=1
+    )
+    
+    # 好友审核延迟
+    friend_verify_delay = Column(
+        Integer,
+        default=0
+    )
+    
+    # 好友申请暗号
+    friend_verify_code = Column(
+        String,
+        default=""
+    )
+    
+    # 通过好友欢迎语
+    friend_verify_welcome = Column(
+        Text,
+        default="你好，我是智微机器人，很高兴认识你！可以发送群邀请链接给我，我会直接加入群聊为你服务！"
+    )
+    
     # 微信头像
     wechat_avatar = Column(
         String,
