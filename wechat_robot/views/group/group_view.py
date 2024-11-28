@@ -113,11 +113,11 @@ class GroupView:
                         ft.Text("群名称", weight=ft.FontWeight.BOLD), expand=4
                     ),
                     ft.Container(
-                        ft.Text("群状态", weight=ft.FontWeight.BOLD), expand=1
+                        ft.Text("状态", weight=ft.FontWeight.BOLD), expand=1
                     ),
                     ft.Container(ft.Text("", weight=ft.FontWeight.BOLD), expand=1),
                 ],
-                alignment=ft.MainAxisAlignment.CENTER,
+                alignment=ft.MainAxisAlignment.START,
             ),
             padding=ft.padding.only(bottom=5),
             border=ft.border.only(bottom=ft.BorderSide(1, ft.colors.BLACK87)),
@@ -125,7 +125,7 @@ class GroupView:
 
     # 群列表数据
     def group_list_data(self):
-        self.ft_lv = ft.ListView(expand=1, padding=5)
+        self.ft_lv = ft.ListView(expand=True, padding=5)
         # 生成测试数据，序号，昵称，备注
         for index, data in enumerate(self.group_list):
             self.ft_lv.controls.append(self.group_list_data_line(data, index))
@@ -160,7 +160,7 @@ class GroupView:
         )
         ft_nick_name = ft.Container(ft.Text(data["nick_name"]), expand=4)
         # ft_status = ft.Text(data["status"], size=20)
-        ft_status = ft.Container(content=ft.Text(data["status"], expand=1))
+        ft_status = ft.Container(content=ft.Text(data["status"]), expand=1)
         pb = ft.PopupMenuButton(
             items=[
                 ft.PopupMenuItem(text="开启/关闭", on_click=lambda e: self.controller.open_or_close(ft_status, data)),
@@ -175,6 +175,7 @@ class GroupView:
             ),
         )
         ft_action = ft.Container(content=pb, expand=1)
+        
         ft_group_list_data_line = ft.Container(
             content=ft.Row(
                 controls=[
@@ -184,11 +185,12 @@ class GroupView:
                     ft_action,
                     # ft.Container(content=ft.Text(data['status'], size=10), width=100),
                 ],
+                alignment=ft.MainAxisAlignment.START,
             ),  # 绑定点击事件处理函数
-            padding=ft.padding.symmetric(vertical=5),
             on_click=lambda e: self.controller.on_click_group_list(
                 ft_group_list_data_line, data
             ),
+            padding=ft.padding.symmetric(vertical=5),
             ink=True,
             border=ft.border.only(bottom=ft.BorderSide(1, ft.colors.BLACK87)),
         )
@@ -228,10 +230,11 @@ class GroupView:
                     ),
                     ft.Container(
                         self.group_member_text,
-                        alignment=ft.alignment.center_left,
+                        alignment=ft.alignment.center_right,
                         expand=3,
                     ),
-                ]
+                ],
+                alignment=ft.MainAxisAlignment.SPACE_BETWEEN
             ),
         )
 
@@ -306,7 +309,6 @@ class GroupView:
                     ft_index,
                     ft_nick_name,
                     ft_wx_id,
-                    # ft.Container(content=ft.Text(data['admin'], size=10), width=100),
                 ],
             ),
             padding=ft.padding.symmetric(vertical=5),

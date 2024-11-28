@@ -30,7 +30,7 @@ class GlobalSettingsView:
                 ],
             },
             {
-                "name": "群管设置",
+                "name": "好友设置",
                 "id": 3,
                 "icon_list": [
                     {"name": "私聊总开关", "id": 31, "path": "/chat_switch", "icon":"WINDOW_OUTLINED"},

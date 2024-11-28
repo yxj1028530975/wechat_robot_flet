@@ -28,7 +28,9 @@ class MainView:
             height=500,
             width=130,
             on_change=self.on_navigation_change,
+            expand=True,
         )
+        
         # 主布局
         return ft.Row(
             [
@@ -45,7 +47,7 @@ class MainView:
 
     def show_logo_name(self):
         ft_img = ft.Image(
-            src=f"https://wx.qlogo.cn/mmhead/ver_1/AYb2dqzgrc5qiaXsHnRu715eajHXXAsYxJCBice2ib3YJrPbw5DQJQVPEoP5RoolrDvs3gTdbmOC85Q9Zh2R6cvoPdEfOqbyklIxzuZvJ4AORVWL2QoibEUibrGxLGoLCepggibL6h5JeeFsJeW4pfoLue3g/0",
+            src=self.controller.avatar_url,
             width=50,
             height=50,
             border_radius=ft.border_radius.all(50),
@@ -56,14 +58,16 @@ class MainView:
         left_bottom_user = ft.Container(
             alignment=ft.alignment.bottom_center,
             width=130,
-            height=150,
+            height=200,
             content=ft.Column(
                 alignment=ft.MainAxisAlignment.END,
                 horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-                controls=[bag, ft.Text("木不易成楊！", size=10)],
+                controls=[bag, ft.Text(self.controller.nick_name, size=15)],
                 spacing=2,
             ),
             # bgcolor=ft.colors.BLUE
+            # 向上偏移10
+            padding=ft.padding.only(bottom=10),
         )
         return left_bottom_user
 

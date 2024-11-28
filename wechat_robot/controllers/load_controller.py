@@ -1,7 +1,8 @@
 import flet as ft
 from wechat_robot.views.load_view import LoadView
 from wechat_robot.utils.wechat_utils import start_wechat
-from wechat_robot.utils.httpx_handle import HttpxHandle
+from wechat_robot.utils.wechat_http_interface import wechat_api
+from wechat_robot.models.robot_setting import SettingCRUD
 import logging
 logger = logging.getLogger(__name__)
 
@@ -15,7 +16,21 @@ class LoadController:
         return start_wechat()
     def go_to_main(self):
         self.app.navigate("/main")
-    def check_wechat_login_status(self,port):
+        
+        
+    # 登陆成功，获取个人信息写入数据库
+    def get_user_info(self):
+        return_data = wechat_api.get_user_info()
+        if not return_data:
+            return False
+        update_data = {
+            "wechat_avatar": return_data['data']['avatar_url'],
+            "wechat_name": return_data['data']['nick_name']
+        }
+        SettingCRUD.update_setting(update_data=update_data)
+
+        
+    def check_wechat_login_status(self):
         """
         检查微信是否登录成功。
 
@@ -28,24 +43,16 @@ class LoadController:
         # 实现您的登录状态检查逻辑，例如：
         # 通过请求本地服务器接口，或者检查特定的进程或文件。
         # 这里提供一个示例，实际实现需根据您的项目需求。
-
-        http_client = HttpxHandle(base_url=f"http://127.0.0.1:{port}", timeout=1)
-
         try:
-            response = http_client.request("POST", "/api", json_data={"type": 1})
-        except Exception as e:
-            logger.error(f"请求发生异常：{e}")
-            return False
-        else:
+            if not (return_data := wechat_api.check_wechat_login_status()):
+                return False
             # 处理响应
-            logger.info(f"返回数据： {response}")
-            data = response.get("data")
+            logger.info("登陆中")
+            data = return_data.get("data")
             if isinstance(data, dict):
                 status = data.get("status")
                 if isinstance(status, int):
                     return status == 1
-                else:
-                    logger.error(f"响应中的 'status' 类型错误，期待 int 类型，但收到 {type(status)} 类型。")
-            else:
-                logger.error("响应中的 'data' 字段为空或格式不正确。")
-        return False
+            return False
+        except Exception as e:
+            return False

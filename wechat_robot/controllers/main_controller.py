@@ -5,11 +5,12 @@ from wechat_robot.controllers.friend.friend_controller import FriendController
 from wechat_robot.controllers.public_account.public_account_controller import PublicAccountController
 from wechat_robot.controllers.global_settings.global_settings_controller import GlobalSettingsController
 from wechat_robot.controllers.plug.plug_controller import PlugController
+from wechat_robot.models.robot_setting import SettingCRUD
 
 class MainController:
     def __init__(self, page: ft.Page,app):
         self.page = page
-        self.app = app
+        self.avatar_url,self.nick_name = self.get_user_info()
         self.group_view = GroupController(self.page).group_view.build()
         self.friend_view = FriendController(self.page).friend_view.build()
         self.public_account_view = PublicAccountController(self.page).public_account_view.build()
@@ -40,3 +41,8 @@ class MainController:
         else:
             self.main_view.update_content(ft.Text("其他内容"))
         self.page.update()
+    
+    # 获取用户信息
+    def get_user_info(self):
+        user_info = SettingCRUD().get_setting()
+        return user_info.wechat_avatar,user_info.wechat_name

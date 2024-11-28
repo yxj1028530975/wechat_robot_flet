@@ -26,8 +26,8 @@ class LoadView:
         """
         while True:
             if login_success := self.controller.check_wechat_login_status(self.port):
-                print("登录成功")
                 # 切换到主页面，需要在主线程中执行
+                self.controller.get_user_info()
                 self.controller.go_to_main()
                 # 使用 page 的函数在主线程中执行页面更新
                 # self.page.invoke(navigate_to_main)
@@ -71,10 +71,4 @@ class LoadView:
             ),
         )
         self.page.add(background)
-        # self.page.add(ft.Rive(
-        #     "https://cdn.rive.app/animations/vehicles.riv",
-        #     placeholder=ft.ProgressBar(),
-        #     width=self.page.window.width,
-        #     height=self.page.window.height-100,
-        # ))
         self.page.update()

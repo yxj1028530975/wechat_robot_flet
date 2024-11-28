@@ -1,8 +1,6 @@
 from sqlalchemy import Column, String, Text, Integer
 from .db_manager import Base
-from sqlalchemy.orm import Session
 from .db_manager import SessionLocal
-
 class Setting(Base):
     __tablename__ = 'setting'
 
@@ -36,3 +34,36 @@ class Setting(Base):
         Text,
         default="功能提示只支持文字、emoji表情,换行in或[enter群用户:[name]"
     )
+    
+    # 微信头像
+    wechat_avatar = Column(
+        String,
+        default="https://wx.qlogo.cn/mmhead/ver_1/HjRriajHlqX2VuichMnCAIde96eJAnck5uPSqzWM26gVZuhniaGK2U7VXYpElRmVQicuIe5w6TuDp9WnYiaAdhbuk6XcUXp8N8ZBPreibTicBxkfNds3Ww4bDVGK1skkuY2t6dv/0"
+    )
+    # 微信昵称
+    wechat_name = Column(
+        String,
+        default="星辰"
+    )
+        
+class SettingCRUD:
+    @staticmethod
+    def get_setting():
+        session = SessionLocal()
+        setting = session.query(Setting).first()
+        if not setting:
+                # 如果不存在设置记录，创建一条默认记录
+                setting = Setting()
+                session.add(setting)
+                session.commit()
+                session.refresh(setting)
+        return setting
+    
+    @staticmethod
+    def update_setting(update_data: dict):
+        session = SessionLocal()
+        setting = SettingCRUD.get_setting(session)
+        for key, value in update_data.items():
+            setattr(setting, key, value)
+        session.commit()
+        return setting

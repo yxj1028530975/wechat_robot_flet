@@ -118,7 +118,7 @@ class FriendView:
 
     # 好友列表数据
     def friend_list_data(self):
-        self.ft_lv = ft.ListView(expand=1, spacing=5)
+        self.ft_lv = ft.ListView(expand=True, spacing=5)
         for index, data in enumerate(self.friend_list, start=1):
             self.ft_lv.controls.append(self.friend_list_data_line(data, index))
         return ft.Container(

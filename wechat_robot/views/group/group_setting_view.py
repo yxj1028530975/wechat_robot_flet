@@ -69,7 +69,7 @@ class GroupSettingView:
         )
         return ft.Container(
             content=tabs,
-            height=500,
+            expand=True,
             # alignment=ft.alignment.center
         )
 
@@ -78,12 +78,12 @@ class GroupSettingView:
         ft_save_all = ft.ElevatedButton(
             "保存到所有群",
             width=200,
-            height=30,
+            # height=30,
         )
         ft_save = ft.ElevatedButton(
             "保存",
             width=80,
-            height=30,
+            # height=30,
             on_click=lambda e: self.controller.save_group_setting(),
         )
         return ft.Container(
@@ -189,21 +189,23 @@ class GroupSettingView:
             ),
             alignment=ft.alignment.bottom_right,  # 垂直底部对齐
             padding=ft.padding.all(10),
+            expand=True,
         )
 
     # 群内提醒文字提示
     def tip_group_setting_text(self, tip):
         ft_tip = ft.Text(
             tip,
-            size=20,
+            # size=20,
             color=ft.colors.RED_800,
             # weight=ft.FontWeight.BOLD,
             width=300,
         )
         return ft.Container(
             content=ft_tip,
-            alignment=ft.alignment.center,  # 垂直底部对齐
+            alignment=ft.alignment.bottom_right,  # 垂直底部对齐
             padding=ft.padding.all(10),
+            expand=True,
         )
 
     # 保存成功提示，弹窗显示

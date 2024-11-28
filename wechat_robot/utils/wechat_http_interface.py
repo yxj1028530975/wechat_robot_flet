@@ -52,6 +52,24 @@ class WeChatAPI:
             json_data={"type": 5, "pull_type": pull_type}
         )
 
+    @api_call
+    def check_wechat_login_status(self) -> Dict[str, Any]:
+        """检查微信登录状态"""
+        return self.client.request(
+            "POST",
+            "/api",
+            json_data={"type": 1}
+        )
+    
+    @api_call
+    def get_user_info(self) -> Dict[str, Any]:
+        """获取用户信息"""
+        return self.client.request(
+            "POST",
+            "/api",
+            json_data={"type": 3}
+        )
+    
     @api_call 
     def pull_wechat_list_members(self, chat_room_id: str) -> Dict[str, Any]:
         """拉取群成员列表"""
