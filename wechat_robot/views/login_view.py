@@ -13,7 +13,7 @@ class LoginView:
         current_wechat_version = get_current_wechat_version()
         if wechat_version != current_wechat_version:
             dlg = ft.AlertDialog(
-                title=ft.Text("Hi, this is a non-modal dialog!"),
+                title=ft.Text(f"微信版本不对，请安装{wechat_version}版本"),
             )
             self.page.open(dlg)
         else:
