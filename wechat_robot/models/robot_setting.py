@@ -62,7 +62,7 @@ class SettingCRUD:
     @staticmethod
     def update_setting(update_data: dict):
         session = SessionLocal()
-        setting = SettingCRUD.get_setting(session)
+        setting = SettingCRUD().get_setting()
         for key, value in update_data.items():
             setattr(setting, key, value)
         session.commit()

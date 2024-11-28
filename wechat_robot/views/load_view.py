@@ -16,7 +16,7 @@ class LoadView:
         # self.page.add(self.app_bar)
         # 启动后台线程监听登录状态
         self.port = get_config("wechat","port")
-        self.check_login_thread = threading.Thread(target=self.check_login_status)
+        self.check_login_thread = threading.Thread(target=self.check_login_status, daemon=True)
         self.check_login_thread.start()
 
     
@@ -25,7 +25,7 @@ class LoadView:
         后台检查微信登录状态，登录成功后跳转到主页面。
         """
         while True:
-            if login_success := self.controller.check_wechat_login_status(self.port):
+            if login_success := self.controller.check_wechat_login_status():
                 # 切换到主页面，需要在主线程中执行
                 self.controller.get_user_info()
                 self.controller.go_to_main()

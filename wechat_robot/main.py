@@ -5,6 +5,9 @@ from wechat_robot.controllers.main_controller import MainController
 from wechat_robot.controllers.load_controller import LoadController
 from wechat_robot.models.db_manager import Base, engine
 
+# 打包命令
+# pyinstaller --onefile --windowed     --add-data "config/config.toml;config"     --add-data "assets;assets"     main.py
+
 # 创建所有表
 Base.metadata.create_all(bind=engine)
 
@@ -22,7 +25,7 @@ class App:
         # get,post 请求路由
         # self.route_p
         self.history = []  # Navigation history
-        self.navigate("/main")
+        self.navigate("/")
 
     def navigate(self, route):
         if route in self.route_to_controller:

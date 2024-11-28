@@ -34,7 +34,7 @@ class PlugView:
                         alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
                     ),
                     padding=10,
-                    border=ft.border.all(1, ft.colors.GREY),
+                    border=ft.border.all(1, ft.colors.BLACK87),
                     border_radius=ft.border_radius.all(8),
                 )
             )

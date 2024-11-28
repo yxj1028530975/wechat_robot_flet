@@ -71,7 +71,7 @@ class GlobalSettingsView:
                 ft.Text(title, weight="bold"),
                 ft.Container(
                     height=1,
-                    bgcolor=ft.colors.BLACK,
+                    bgcolor=ft.colors.BLACK87,
                     width="100%",
                 ),
             ],
@@ -108,7 +108,7 @@ class GlobalSettingsView:
             width=150,
             height=150,
             padding=10,
-            border=ft.border.all(1, ft.colors.GREY),
+            border=ft.border.all(1, ft.colors.BLACK87),
             border_radius=ft.border_radius.all(8),
             alignment=ft.alignment.center,  # 容器居中
             # on_click=lambda e: self.controller.navigate_to(data['path']),  # 添加点击事件

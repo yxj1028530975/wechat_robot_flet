@@ -4,6 +4,7 @@ import psutil
 from typing import Optional
 import subprocess
 from wechat_robot.utils.config_utils import get_inject_tool_dir,get_config
+import os
 
 # 配置日志记录器
 logger = logging.getLogger(__name__)
@@ -89,29 +90,19 @@ def get_available_port() -> Optional[int]:
     return next((port for port in range(30001, 30100) if not check_port_in_use(port)), None)
 
 # 拼接启动微信命令
-def start_wechat_command(port:str) -> Optional[str]:
+def start_wechat_command(port: str) -> Optional[str]:
     """
     拼接启动微信命令。
 
     返回:
         Optional[str]: 启动命令字符串，如果未找到可用端口则返回 None。
     """
-
-    # TODO 专业版
-    # key = get_config("wechat", "key")
-    # print(f"key: {key}")
-    # if key is None:
-    #     logger.error("获取配置项 'wechat' 中的 'key' 失败。")
-    #     return None
-    
     exe_path = get_inject_tool_dir()
-    print(f"exe_path: {exe_path}")
-    if exe_path is None:
-        logger.error("获取 start_wechat.exe 路径失败。")
+    if not os.path.exists(exe_path):
+        logger.error(f"start_wechat.exe 不存在于路径: {exe_path}")
         return None
-    
-    # return f"{exe_path} start {port} --key={key}"
-    return f"{exe_path}  {port}"
+
+    return f"{exe_path} {port}"
 
 # 获取微信hook启动命令
 def start_wechat() -> Optional[str]:

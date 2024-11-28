@@ -27,7 +27,7 @@ class LoadController:
             "wechat_avatar": return_data['data']['avatar_url'],
             "wechat_name": return_data['data']['nick_name']
         }
-        SettingCRUD.update_setting(update_data=update_data)
+        SettingCRUD().update_setting(update_data=update_data)
 
         
     def check_wechat_login_status(self):
@@ -45,6 +45,7 @@ class LoadController:
         # 这里提供一个示例，实际实现需根据您的项目需求。
         try:
             if not (return_data := wechat_api.check_wechat_login_status()):
+                logger.error("未能获取到微信登录状态")
                 return False
             # 处理响应
             logger.info("登陆中")
