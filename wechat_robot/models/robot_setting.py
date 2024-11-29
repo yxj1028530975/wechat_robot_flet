@@ -44,7 +44,7 @@ class Setting(Base):
     # 好友审核延迟
     friend_verify_delay = Column(
         Integer,
-        default=0
+        default=5
     )
     
     # 好友申请暗号
@@ -58,6 +58,8 @@ class Setting(Base):
         Text,
         default="你好，我是智微机器人，很高兴认识你！可以发送群邀请链接给我，我会直接加入群聊为你服务！"
     )
+    # 私聊总开关
+    private_chat_enabled = Column(Integer, default=1) 
     
     # 微信头像
     wechat_avatar = Column(
@@ -74,20 +76,30 @@ class SettingCRUD:
     @staticmethod
     def get_setting():
         session = SessionLocal()
-        setting = session.query(Setting).first()
-        if not setting:
+        try:
+            setting = session.query(Setting).first()
+            if not setting:
                 # 如果不存在设置记录，创建一条默认记录
                 setting = Setting()
                 session.add(setting)
                 session.commit()
                 session.refresh(setting)
-        return setting
+            return setting
+        finally:
+            session.close()
     
     @staticmethod
     def update_setting(update_data: dict):
         session = SessionLocal()
-        setting = SettingCRUD().get_setting()
-        for key, value in update_data.items():
-            setattr(setting, key, value)
-        session.commit()
-        return setting
+        try:
+            setting = session.query(Setting).first()
+            if not setting:
+                # 如果不存在设置记录，创建一条默认记录
+                setting = Setting()
+                session.add(setting)
+            for key, value in update_data.items():
+                setattr(setting, key, value)
+            session.commit()
+            return setting
+        finally:
+            session.close()

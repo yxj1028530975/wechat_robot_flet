@@ -54,7 +54,7 @@ logging_config = {
 }
 
 # # 应用日志配置
-logging.config.dictConfig(logging_config)
+# logging.config.dictConfig(logging_config)
 logger = logging.getLogger(__name__)
 
 def main(page: ft.Page):

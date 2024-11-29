@@ -71,6 +71,7 @@ async def rec_msg(data: Dict[str, Any]):
 def start_api():
     try:
         logger.info("Starting FastAPI server...")
-        uvicorn.run(app, host="127.0.0.1", port=9000,log_config=logging_config)
+        # uvicorn.run(app, host="127.0.0.1", port=9000,log_config=logging_config)
+        uvicorn.run(app, host="127.0.0.1", port=9000)
     except Exception as e:
         logger.error(f"Error starting FastAPI: {e}")

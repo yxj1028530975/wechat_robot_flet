@@ -1,6 +1,5 @@
 import flet as ft
 from wechat_robot.views.signup_view import SignUpView
-from wechat_robot.models.user_model import UserModel
 from wechat_robot.utils.ft_utils import msg_erro
 # from wechat_robot.models.db_manager import DatabaseManager
 
@@ -29,12 +28,13 @@ class SignUpController:
             print("密码必须相同")
             return
         else:
-            new_user = UserModel(user_data, self.db_manager)
-            try:
-                new_user.add_userdb()
-                print("用户注册成功！")
-            except ValueError as e:
-                self.error(str(e))
+            print("用户注册成功！")
+            # new_user = UserModel(user_data, self.db_manager)
+            # try:
+            #     new_user.add_userdb()
+            #     print("用户注册成功！")
+            # except ValueError as e:
+            #     self.error(str(e))
 
         # 想法：创建高级密码检查，创建邮箱确认，为 DDD 创建代码
                 
