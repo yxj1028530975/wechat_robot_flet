@@ -413,3 +413,63 @@ class GlobalSettingsView:
         self.controller.page.dialog = dialog
         dialog.open = True
         self.controller.page.update()
+
+    # 自动进群功能界面，开关按钮和说明
+    def auto_join_group(self):
+        # 获取当前设置
+        setting = SettingCRUD.get_setting()
+        self.auto_join_group_switch = ft.Switch(value=bool(setting.auto_join_group))
+        
+        # 构建弹窗内容
+        dialog = ft.AlertDialog(
+            title=ft.Text("自动进群"),
+            content=ft.Column(
+                controls=[
+                    ft.Text("开启或关闭自动进群功能：", weight="bold", size=20),
+                    self.auto_join_group_switch,
+                ],
+            ),
+            actions=[
+                ft.TextButton("取消", on_click=self.close_dialog),
+                ft.TextButton("保存", on_click=self.save_auto_join_group),
+            ],
+        )
+        self.controller.page.dialog = dialog
+        dialog.open = True
+        self.controller.page.update()
+    def save_auto_join_group(self, e):
+        # 更新数据库
+        auto_join_group = int(self.auto_join_group_switch.value)
+        SettingCRUD.update_setting(update_data={"auto_join_group": auto_join_group})
+        self.close_dialog(e)
+        
+    # 群聊总开关功能界面，开关按钮和说明
+    def group_chat_switch(self):
+        # 获取当前设置
+        setting = SettingCRUD.get_setting()
+        self.group_chat_switch_control = ft.Switch(value=bool(setting.group_chat_enabled))
+        
+        # 构建弹窗内容
+        dialog = ft.AlertDialog(
+            title=ft.Text("群聊总开关"),
+            content=ft.Column(
+                controls=[
+                    ft.Text("开启或关闭群聊功能："),
+                    self.group_chat_switch_control,
+                ],
+            ),
+            actions=[
+                ft.TextButton("取消", on_click=self.close_dialog),
+                ft.TextButton("保存", on_click=self.save_group_chat_switch),
+            ],
+        )
+        self.controller.page.dialog = dialog
+        dialog.open = True
+        self.controller.page.update()
+    def save_group_chat_switch(self, e):
+        # 更新数据库
+        group_chat_enabled = int(self.group_chat_switch_control.value)
+        SettingCRUD.update_setting(update_data={"group_chat_enabled": group_chat_enabled})
+        self.close_dialog(e)
+    
+    

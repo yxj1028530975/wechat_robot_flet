@@ -61,6 +61,14 @@ class Setting(Base):
     # 私聊总开关
     private_chat_enabled = Column(Integer, default=1) 
     
+    # 群聊总开关
+    group_chat_enabled = Column(Integer, default=1)
+    
+    # 自动进群
+    auto_join_group = Column(Integer, default=0)
+    
+    
+    
     # 微信头像
     wechat_avatar = Column(
         String,

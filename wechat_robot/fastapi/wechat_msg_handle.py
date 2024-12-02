@@ -1,5 +1,7 @@
 from lxml import etree
-#好友申请消息解析
+
+
+# 好友申请消息解析
 def friend_request_xml_jx(message):
     xml = etree.fromstring(message)
     """
@@ -28,4 +30,28 @@ def friend_request_xml_jx(message):
     content = xml.get("content")
     scene = xml.get("scene")
     smallheadimgurl = xml.get("smallheadimgurl")
-    return fromusername, encryptusername, ticket,content
+    return fromusername, encryptusername, ticket, content
+
+
+# 邀请进群解析
+def chatroom_invite_xml_jx(message):
+    xml = etree.fromstring(message)
+    """
+    {
+    "at_list": [],
+    "content": "<msg><emoji fromusername = \"wxid_2lallno9qrhi22\" tousername = \"47948179679@chatroom\" type=\"2\" idbuffer=\"media:0_0\" md5=\"8a77b7acd4e2df348dd1612aa612b018\" len = \"837807\" productid=\"\" androidmd5=\"8a77b7acd4e2df348dd1612aa612b018\" androidlen=\"837807\" s60v3md5 = \"8a77b7acd4e2df348dd1612aa612b018\" s60v3len=\"837807\" s60v5md5 = \"8a77b7acd4e2df348dd1612aa612b018\" s60v5len=\"837807\" cdnurl = \"http://vweixinf.tc.qq.com/110/20401/stodownload?m=8a77b7acd4e2df348dd1612aa612b018&amp;filekey=30440201010430302e02016e0402535a0420386137376237616364346532646633343864643136313261613631326230313802030cc8af040d00000004627466730000000132&amp;hy=SZ&amp;storeid=2669bde3a0003e0a77a6eb6100000006e01004fb1535a09ef0011570160409&amp;ef=1&amp;bizid=1022\" designerid = \"\" thumburl = \"\" encrypturl = \"http://vweixinf.tc.qq.com/110/20402/stodownload?m=ac6d61cff6f17e02bfca4c9da82bebcb&amp;filekey=30440201010430302e02016e0402535a0420616336643631636666366631376530326266636134633964613832626562636202030cc8b0040d00000004627466730000000132&amp;hy=SZ&amp;storeid=2669bde3a0005099b7a6eb6100000006e02004fb2535a09ef0011570160420&amp;ef=2&amp;bizid=1022\" aeskey= \"dbb7a23f88f14789b81a5d934b80b327\" externurl = \"http://vweixinf.tc.qq.com/110/20403/stodownload?m=14c5f4970fa4d44e45f93b139a24eb54&amp;filekey=30440201010430302e02016e0402535a042031346335663439373066613464343465343566393362313339613234656235340203031480040d00000004627466730000000132&amp;hy=SZ&amp;storeid=2669bde3a00062a437a6eb6100000006e03004fb3535a09ef0011570160433&amp;ef=3&amp;bizid=1022\" externmd5 = \"08f743e4efc74e0967a1255cb919f644\" width= \"300\" height= \"303\" tpurl= \"\" tpauthkey= \"\" attachedtext= \"\" attachedtextcolor= \"\" lensid= \"\" emojiattr= \"\" linkid= \"\" desc= \"\" ></emoji> </msg>",
+    "file_path": "D:\\wechatFile\\WeChat Files\\8A77B7ACD4E2DF348DD1612AA612B018",
+    "is_pc_msg": 0,
+    "is_self_msg": 0,
+    "local_id": "67083",
+    "msg_id": "293966221245869311",
+    "msg_type": 47,
+    "port": 30001,
+    "self_wx_id": "wxid_tjlscvvc60a022",
+    "sender": "wxid_2lallno9qrhi22",
+    "time_stamp": 1733125839,
+    "type": 100,
+    "wx_id": "47948179679@chatroom"
+}
+    """
+    return xml.xpath("//url")[0].text

@@ -22,8 +22,6 @@ class App:
             "/main": MainController,
             # ... other routes ...
         }
-        # get,post 请求路由
-        # self.route_p
         self.history = []  # Navigation history
         self.navigate("/main")
 

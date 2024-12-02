@@ -97,6 +97,17 @@ class WeChatAPI:
                 "v4": v4,
             },
         )
+    @api_call
+    def api_agree_friend_invite(self, url: str) -> Dict[str, Any]:
+        """同意邀请进群"""
+        return self.client.request(
+            "POST",
+            "/api",
+            json_data={
+                "type": 56,
+                "url": url,
+            },
+        )
 
 
 # 创建全局实例
