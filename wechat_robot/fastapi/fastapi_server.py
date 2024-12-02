@@ -5,7 +5,7 @@ import logging.config
 import os
 import threading
 import uvicorn
-import flet.fastapi as flet_fastapi
+import fastapi as flet_fastapi
 import flet as ft
 from typing import Any,Dict
 from wechat_robot.fastapi.wechat_msg import wechat_msg_handle  # 导入新文件中的 start_api 函数
@@ -64,6 +64,7 @@ app = flet_fastapi.FastAPI()
 @app.post("/msg")
 async def rec_msg(data: Dict[str, Any]):
     # 处理接收到的消息
+    print(f"收到消息: {data}")
     logger.info(f"收到消息: {data}")
     wechat_msg_handle(data)
 

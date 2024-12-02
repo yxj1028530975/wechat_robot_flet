@@ -25,7 +25,7 @@ class App:
         # get,post 请求路由
         # self.route_p
         self.history = []  # Navigation history
-        self.navigate("/")
+        self.navigate("/main")
 
     def navigate(self, route):
         if route in self.route_to_controller:

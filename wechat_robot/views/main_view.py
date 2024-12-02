@@ -51,25 +51,21 @@ class MainView:
             width=50,
             height=50,
             border_radius=ft.border_radius.all(50),
+            badge=ft.Badge(small_size=10, text="智微"),
         )
-        #
-        bag = ft.Badge(content=ft_img, text="智微")
-
-        left_bottom_user = ft.Container(
+        ft_name = ft.Text(self.controller.nick_name, size=15)
+        return ft.Container(
             alignment=ft.alignment.bottom_center,
             width=130,
             height=200,
             content=ft.Column(
                 alignment=ft.MainAxisAlignment.END,
                 horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-                controls=[bag, ft.Text(self.controller.nick_name, size=15)],
+                controls=[ft_img, ft_name],
                 spacing=2,
             ),
-            # bgcolor=ft.colors.BLUE
-            # 向上偏移10
             padding=ft.padding.only(bottom=10),
         )
-        return left_bottom_user
 
     def on_navigation_change(self, e):
         old_index = self.selected_index
