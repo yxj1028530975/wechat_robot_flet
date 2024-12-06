@@ -108,7 +108,19 @@ class WeChatAPI:
                 "url": url,
             },
         )
-
+        
+    @api_call
+    def api_send_xml_message(self, wx_id: str, xml_str: str) -> Dict[str, Any]:
+        """发送XML消息"""
+        return self.client.request(
+            "POST",
+            "/api",
+            json_data={
+                "type": 49,
+                "wx_id": wx_id,
+                "xml_str": xml_str
+            },
+        )
 
 # 创建全局实例
 wechat_api = WeChatAPI()

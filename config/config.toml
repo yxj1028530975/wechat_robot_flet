@@ -18,3 +18,6 @@ welcome_setting = "╒═══【新成员报到】═══╗\n🎉 启禀群
 welcome_setting_tip = "新人进群提醒只支持文字、emoji表情,换行in或[enter群用户:[name]"
 fun_setting = "╒══功能提示══╗"
 fun_setting_tip = "功能提示只支持文字、emoji表情,换行in或[enter群用户:[name]"
+
+[wechat_robot_server]
+url = "https://yxj101.cn"

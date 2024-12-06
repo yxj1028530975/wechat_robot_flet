@@ -36,7 +36,6 @@ class PublicAccountView:
                 ),
                 ft.Tab(
                     text="帮助说明",
-                    icon=ft.icons.SETTINGS,
                     content=ft.Text("This is Tab 4"),
                 ),
             ],

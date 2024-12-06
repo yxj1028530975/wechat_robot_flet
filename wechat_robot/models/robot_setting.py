@@ -67,8 +67,6 @@ class Setting(Base):
     # 自动进群
     auto_join_group = Column(Integer, default=0)
     
-    
-    
     # 微信头像
     wechat_avatar = Column(
         String,
@@ -79,7 +77,8 @@ class Setting(Base):
         String,
         default="星辰"
     )
-        
+    wechat_wx_id = Column(String)
+    wechat_account = Column(String)
 class SettingCRUD:
     @staticmethod
     def get_setting():

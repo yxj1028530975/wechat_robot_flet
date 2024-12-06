@@ -24,7 +24,7 @@ class GroupController:
             if not return_data:
                 self.show_error_message("未能获取到群列表，可能是微信掉线或请求失败。请重启软件登录微信")
                 return []
-            return_data_list = self.loc_and_pull_wechat_list(return_data)
+            self.loc_and_pull_wechat_list(return_data)
             self.init_group_members()
 
         except Exception as e:

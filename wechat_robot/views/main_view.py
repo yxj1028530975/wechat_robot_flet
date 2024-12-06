@@ -15,7 +15,7 @@ class MainView:
         rail = ft.NavigationRail(
             selected_index=self.selected_index,
             label_type=ft.NavigationRailLabelType.ALL,
-            min_width=100,
+            min_width=200,
             min_extended_width=400,
             group_alignment=-0.9,
             destinations=[
@@ -29,6 +29,7 @@ class MainView:
             width=130,
             on_change=self.on_navigation_change,
             expand=True,
+            bgcolor=ft.colors.WHITE,
         )
         
         # 主布局

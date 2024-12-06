@@ -1,5 +1,5 @@
 from lxml import etree
-
+from wechat_robot.utils.httpx_handle import HttpxHandle
 
 # 好友申请消息解析
 def friend_request_xml_jx(message):
@@ -55,3 +55,22 @@ def chatroom_invite_xml_jx(message):
 }
     """
     return xml.xpath("//url")[0].text
+
+# 获取点歌内容
+# def get_qq_song_info(search_name="世界第一等"):
+#     url = 'https://api.livetools.top/music_api/get_qq_song_info' + f"?name={search_name}"
+#     data = HttpxHandle(
+#                 base_url=url, timeout=2
+#             )
+#     if data.get("code") == 200 and data.get("data"):
+#         return_data = data['data'][0]
+#         if return_data:
+#             self.send_music(
+#                 self.wechat_wxid,
+#                 return_data["name"],
+#                 return_data["singer"],
+#                 return_data["image_url"] if return_data["image_url"] else "https://y.qq.com/favicon.ico?max_age=2592000",
+#                 return_data["download_url"],
+#                 f"https://y.qq.com/n/ryqq/songDetail",
+#                 mod="76"
+#             )

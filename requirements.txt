@@ -1,4 +1,4 @@
-flet==0.24.1
+flet==0.25.1
 uvicorn==0.32.0
 psutil==6.1.0
 SQLAlchemy==2.0.36

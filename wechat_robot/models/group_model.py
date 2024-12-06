@@ -7,10 +7,12 @@ class Group(Base):
 
     group_id = Column(String, primary_key=True, unique=True, index=True)
     group_name = Column(String)
-    status = Column(String)
+    status = Column(String,default=1)
     out_setting = Column(Text)
     welcome_setting = Column(Text)
     fun_setting = Column(Text)
+    fun_list = Column(String)
+    
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

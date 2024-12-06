@@ -14,13 +14,21 @@ def setup_base_page(self):
     self.page.theme = ft.Theme(
         font_family="alifont",
     )
+    # self.page.window.title_bar_hidden = True
     self.page.controls.clear()
     self.page.window.center()
+    self.page.window.icon = "img/robot_icon.ico"
     self.page.bgcolor = ft.colors.WHITE
     self.page.window.width = get_config("wechat_robot","main_height")
     self.page.window.height = get_config("wechat_robot","main_width")
     self.page.window.resizable = False
     self.page.window.always_on_top = False
+    self.page.window.movable = True
+    # self.page.window.bgcolor = ft.Colors.TRANSPARENT
+    # self.page.bgcolor = ft.Colors.TRANSPARENT
+    # self.page.window.title_bar_hidden = True
+    # self.page.window.title_bar_buttons_hidden = True
+    # self.page.window.frameless = True
     self.page.title = get_config("wechat_robot", "name")
 
 def nav_app_bar(title: str) -> ft.AppBar:

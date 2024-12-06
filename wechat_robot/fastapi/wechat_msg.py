@@ -1,14 +1,15 @@
 # 微信消息处理逻辑
 from wechat_robot.models.group_model import GroupCRUD
 from wechat_robot.models.robot_setting import SettingCRUD
+from wechat_robot.models.fun_model import FunCRUD
 from wechat_robot.utils.config_utils import get_config
 from wechat_robot.utils.wechat_http_interface import wechat_api
 from wechat_robot.fastapi.wechat_msg_handle import friend_request_xml_jx,chatroom_invite_xml_jx
 import time
-
+import ast
 test_group_id = "51740029844@chatroom"
 
-type = (
+sys_type = (
     [
         ("100", "消息"),
         ("333", "进群通知"),
@@ -48,12 +49,12 @@ msg_type = [
     ("10002", "撤回消息"),
 ]
 
-
 # 处理微信消息入口
 def wechat_msg_handle(data):
     msg_type = data.get("msg_type", "")
     sys_type = data.get("type", "")
     content = data.get("content", "")
+    sender = data.get("sender","")
     if msg_type == 37 and sys_type == 100:
         # 好友申请事件处理
         agree_friend_application_handle(data)
@@ -72,6 +73,56 @@ def wechat_msg_handle(data):
     elif sys_type == 444:
         # 退群提醒
         out_group_msg_handle(data)
+    
+    elif content == "菜单" and sys_type == 100 and msg_type == 1 and sender :
+        # 菜单功能
+        menu_handle(data)
+    elif content == "激活" and sys_type == 100 and msg_type == 1 and sender :
+        # 菜单功能
+        active_handle(data)
+    elif sys_type == 100 and msg_type == 1 and sender:
+        # 判断是否触发功能
+        trigger_function_handle(data)
+
+
+# 菜单功能
+def menu_handle(data):
+    # 获取群组信息
+    group_id = data["wx_id"]
+    group = GroupCRUD.get_group_by_id(group_id)
+    if not group:
+        fun_setting = active_handle(data)
+    if group and group.fun_setting:
+        fun_setting = group.fun_setting
+    wechat_api.send_wechat_msg(group_id, fun_setting)
+
+# 激活功能
+def active_handle(data):
+    # 获取群组信息
+    group_id = data["wx_id"]
+    group = GroupCRUD.get_group_by_id(group_id)
+    if not group:
+        # 新建数据
+        fun_list_ids = FunCRUD.get_all_fun_id()
+        # 模板示例
+        fun_setting = "📚 功能菜单\n"
+        fun_list = ""
+        for inx, fun in enumerate(fun_list_ids):
+            inx = inx + 1
+            # 格式化序号，统一为两位数，前面补空格
+            index_str = f"{inx:>2}"
+            # 获取功能名称，限制在四个字以内，如果不足四个字，使用全角空格补足
+            fun_name = fun.trigger_keyword[:4]
+            fun_name = fun_name.ljust(4, '　')  # 使用全角空格补足至四个字
+            # 如果是偶数，添加换行符，否则添加制表符
+            foot_str = "\n" if inx % 2 == 0 else "\t"
+            # 拼接功能菜单
+            fun_setting += f"{index_str} > 【{fun_name}】{foot_str}"
+            fun_list += f'{fun.fun_id},'
+        fun_list = fun_list.rstrip(',')
+        # 添加群组
+        GroupCRUD.add_group({"group_id": group_id, "fun_list": fun_list, "fun_setting": fun_setting})
+        return fun_setting
 
 
 # 邀请进群欢迎语处理
@@ -225,6 +276,7 @@ def agree_friend_application_handle(data):
     wechat_api.api_agree_friend_application(
         wx_id=fromusername, v3=encryptusername, v4=ticket
     )
+    time.sleep(1)
     if friend_verify_welcome:
         wechat_api.send_wechat_msg(fromusername, friend_verify_welcome)
         
@@ -251,4 +303,57 @@ def invite_group_handle(content):
     """
     url = chatroom_invite_xml_jx(content)
     wechat_api.api_agree_friend_invite(url=url)
-    
+
+# 判断是否触发功能模块
+def trigger_function_handle(data):
+    content = data.get("content", "")
+    wx_id = data.get("wx_id", "")
+    fun_dict_type = FunCRUD.get_all_fun()
+    for trigger_type, functions in fun_dict_type.items():
+        for fun in functions:
+            if not fun['status']:
+                continue  # 跳过未启用的功能
+            trigger_keyword = fun['trigger_keyword']
+            code = fun['code']
+            if trigger_type == 1 and trigger_keyword == content:
+                # 触发关键词
+                execute_function_code(code, content,wx_id)
+            elif trigger_type == 2 and content.startswith(trigger_keyword):
+                # 触发前缀
+                robot_setting = SettingCRUD.get_setting()
+                my_wxid = robot_setting.wechat_wx_id
+                # diange(content,wx_id,my_wxid)
+
+                execute_function_code(code, content,wx_id,my_wxid)
+            # 可以继续扩展其他触发类型逻辑
+def execute_function_code(code_str, content,wx_id,my_wxid=""):
+    # 提取参数，例如提取"点歌"后的内容
+    import json
+    import requests
+    # args = content.split(' ', 1)
+    # user_input = args[1] if len(args) > 1 else ''
+    # 安全地执行代码
+    try:
+        # 使用受限的全局和本地命名空间
+        safe_globals = {
+            '__builtins__': {
+                'print': print,
+            },
+            'json': json,
+            'requests': requests,
+            'wechat_api': wechat_api,
+            'wx_id': wx_id,
+            'content': content,
+            'my_wxid':my_wxid
+        }
+        safe_locals = {
+            'user_input': content,
+            # 可以添加允许的函数，如请求库等
+            # 例如 'requests': requests
+        }
+        # 编译代码为 AST
+        code_ast = ast.parse(code_str, mode='exec')
+        # 安全地执行 AST
+        exec(compile(code_ast, filename="<string>", mode="exec"), safe_globals, safe_locals)
+    except Exception as e:
+        print(f"执行功能代码出错：{e}")

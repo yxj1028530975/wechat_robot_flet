@@ -3,7 +3,6 @@
 import logging
 import logging.config
 import os
-import threading
 import uvicorn
 import fastapi as flet_fastapi
 import flet as ft
@@ -76,3 +75,4 @@ def start_api():
         uvicorn.run(app, host="127.0.0.1", port=9000)
     except Exception as e:
         logger.error(f"Error starting FastAPI: {e}")
+        

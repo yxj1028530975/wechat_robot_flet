@@ -25,7 +25,9 @@ class LoadController:
             return False
         update_data = {
             "wechat_avatar": return_data['data']['avatar_url'],
-            "wechat_name": return_data['data']['nick_name']
+            "wechat_name": return_data['data']['nick_name'],
+            "wechat_wx_id": return_data['data']['wx_id'],
+            "wechat_account": return_data['data']['wx_account'],
         }
         SettingCRUD().update_setting(update_data=update_data)
 
