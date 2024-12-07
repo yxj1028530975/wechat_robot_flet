@@ -1,5 +1,6 @@
 import logging
 import logging.config
+import threading
 import os
 import flet as ft
 from wechat_robot.main import App
@@ -62,9 +63,9 @@ def main(page: ft.Page):
 
 if __name__ == "__main__":
     # 创建并启动线程来运行 FastAPI 服务器
-    # api_thread = threading.Thread(target=start_api, daemon=True)
-    # logger.info("启动 FastAPI 服务器")
-    # api_thread.start()
+    api_thread = threading.Thread(target=start_api, daemon=True)
+    logger.info("启动 FastAPI 服务器")
+    api_thread.start()
     
     # 运行 Flet 桌面应用程序
     ft.app(target=main, view=ft.AppView.FLET_APP,assets_dir="assets")
