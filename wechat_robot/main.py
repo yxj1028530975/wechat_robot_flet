@@ -27,7 +27,7 @@ class App:
 
     def navigate(self, route):
         if route in self.route_to_controller:
-            self.history.append(route)  # Add the route to the history
+            self.history.append(route)
             controller_class = self.route_to_controller[route]
             controller = controller_class(self.page, self)
             print(route)

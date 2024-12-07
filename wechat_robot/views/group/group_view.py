@@ -25,9 +25,11 @@ class GroupView:
         self.group_list_view = self.build_group_list_view()
         self.group_member_view = self.build_group_member_view()
         # 返回整个群组视图
-        return ft.Tabs(
+        return ft.Container(content=
+                            ft.Tabs(
             selected_index=0,
             animation_duration=300,
+            label_text_style=ft.TextStyle(size=18,weight=ft.FontWeight.BOLD),
             tabs=[
                 ft.Tab(
                     text="群管理",
@@ -47,8 +49,9 @@ class GroupView:
             ],
             expand=True,
             # height=600,
-            width=1100,
-        )
+            width=1150,
+        ),padding=ft.padding.only(left=20, top=0, right=0, bottom=0),bgcolor="#F2F4F8")
+
 
     # 群列表
     def build_group_list_view(self):
@@ -61,18 +64,29 @@ class GroupView:
                     self.ft_group_list_data,
                 ]
             ),
-            height=600,
-            width=540,
+            height=594,
+            width=495,
             padding=10,
             # 增加边框
-            border=ft.border.all(1, ft.colors.BLACK87),
+            # border=ft.border.all(1, ft.colors.BLACK87),
+            bgcolor=ft.colors.WHITE,
+            border_radius=ft.border_radius.all(5),
+            # box-shadow: 2px 2px 2px 0px #69707733;
+
+            # shadow=ft.BoxShadow(
+            #     spread_radius=1,
+            #     # blur_radius=15,
+            #     color="#69707733",
+            #     # offset=ft.Offset(0, 0),
+            #     # blur_style=ft.ShadowBlurStyle.OUTER,
+            # )
         )
 
     # 第一行标题,靠左
     def group_list_title(self):
         return ft.Container(
             content=ft.Row(
-                [
+                [   ft.Icon(ft.icons.GROUP),
                     ft.Text("群列表"),
                 ]
             ),
@@ -81,24 +95,31 @@ class GroupView:
     # 按钮
     def group_list_button(self):
         ft_find = ft.TextField(
-            label="查找",
+            label="群名称",
             autofill_hints=ft.AutofillHint.NAME,
-            text_size=18,
-            height=30,
-            width=150,
+            text_size=12,
+            height=25,
+            width=165,
+            border=ft.border.all(1, ft.colors.BLACK87),
+            bgcolor="#F2F4F8",
+            color="#F2F4F8",
         )
         ft_find_button = ft.ElevatedButton(
             "查找",
-            width=80,
-            height=30,
+            width=55,
+            height=25,
+            color="#FFFFFF",
+            bgcolor="#001D6C",
             on_click=lambda e: self.controller.search_wechat_list(ft_find.value),
         )
         # ft_import = ft.TextButton(text="导出")
-        ft_delete = ft.TextButton(
+        ft_update = ft.ElevatedButton(
+            width=55,
+            height=25,
             text="刷新", on_click=lambda e: self.controller.view_pull_wechat_list()
         )
         return ft.Container(
-            content=ft.Row([ft_find, ft_find_button, ft_delete]),
+            content=ft.Row([ft_find, ft_find_button, ft_update]),
             width=550,
         )
 
@@ -107,7 +128,7 @@ class GroupView:
         return ft.Container(
             content=ft.Row(
                 controls=[
-                    ft.Container(ft.Text("序号", weight=ft.FontWeight.BOLD), expand=1),
+                    ft.Container(ft.Text("序号", weight=ft.FontWeight.BOLD), expand=2,alignment=ft.alignment.center),
                     ft.Container(
                         ft.Text("群名称", weight=ft.FontWeight.BOLD), expand=4
                     ),
@@ -118,34 +139,26 @@ class GroupView:
                 ],
                 alignment=ft.MainAxisAlignment.START,
             ),
-            padding=ft.padding.only(bottom=5),
-            border=ft.border.only(bottom=ft.BorderSide(1, ft.colors.BLACK87)),
+            width=470,
+            height=40,
+            bgcolor="#F2F4F8",
+            # padding=0,
         )
 
     # 群列表数据
     def group_list_data(self):
-        self.ft_lv = ft.ListView(expand=True, padding=5)
+        self.ft_lv = ft.ListView(expand=True, padding=0)
         # 生成测试数据，序号，昵称，备注
         for index, data in enumerate(self.group_list):
             self.ft_lv.controls.append(self.group_list_data_line(data, index))
         return ft.Container(
             expand=True,
             content=self.ft_lv,
-            border=ft.border.all(1, ft.colors.BLACK87),
             border_radius=ft.border_radius.all(5),
         )
-        # ft.Container(
-        #     height=430,
-        #     width=550,
-        #     content=ft.Column(
-        #         controls=[
-        #             self.ft_lv,
-        #         ],
-        #     ),
-        #     border=ft.border.all(1, ft.colors.GREY),
-        # )
 
     def group_list_data_line(self, data, index):
+        bgcolor = "#FFFFFF" if index % 2 == 0 else "#F2F4F8"
         # 每行增加边框
         ft_index = ft.Container(
             content=ft.Row(
@@ -155,7 +168,7 @@ class GroupView:
                 ],
                 alignment=ft.MainAxisAlignment.START,
             ),
-            expand=1,
+            expand=2,
         )
         ft_nick_name = ft.Container(ft.Text(data["nick_name"]), expand=4)
         # ft_status = ft.Text(data["status"], size=20)
@@ -170,7 +183,7 @@ class GroupView:
                 ),
             ],
             on_open=lambda e: self.controller.on_click_group_list(
-                ft_group_list_data_line, data
+                ft_group_list_data_line, data,bgcolor
             ),
         )
         ft_action = ft.Container(content=pb, expand=1)
@@ -187,11 +200,14 @@ class GroupView:
                 alignment=ft.MainAxisAlignment.START,
             ),  # 绑定点击事件处理函数
             on_click=lambda e: self.controller.on_click_group_list(
-                ft_group_list_data_line, data
+                ft_group_list_data_line, data,bgcolor
             ),
             padding=ft.padding.symmetric(vertical=5),
             ink=True,
-            border=ft.border.only(bottom=ft.BorderSide(1, ft.colors.BLACK87)),
+            # border=ft.border.only(bottom=ft.BorderSide(1, ft.colors.BLACK87)),
+            height=50,
+            width=470,
+            bgcolor=bgcolor,
         )
         return ft_group_list_data_line
 
@@ -206,27 +222,28 @@ class GroupView:
                     self.ft_group_member_data,
                 ]
             ),
-            height=600,
-            width=540,
+            height=594,
+            width=495,
             padding=10,
             # 增加边框
-            border=ft.border.all(1, ft.colors.BLACK87),
+            # border=ft.border.all(1, ft.colors.BLACK87),
+            bgcolor=ft.colors.WHITE,
+            border_radius=ft.border_radius.all(5),
         )
 
     # 群成员标题
     def group_member_title(self):
 
         self.group_member_text = ft.Text(
-            f"[群名称:{self.group_name}]", color=ft.colors.RED_800
+            f"[当前:{self.group_name}]", color="#001D6C",
         )
         return ft.Container(
             content=ft.Row(
                 controls=[
                     ft.Container(
-                        ft.Text("群成员"),
-                        alignment=ft.alignment.center_left,
-                        expand=1,
-                    ),
+                        ft.Row(controls=[
+                        ft.Icon(ft.icons.GROUPS),
+                        ft.Text("群成员"),]),),
                     ft.Container(
                         self.group_member_text,
                         alignment=ft.alignment.center_right,
@@ -240,21 +257,24 @@ class GroupView:
     # 按钮
     def group_member_button(self):
         ft_find = ft.TextField(
-            label="查找",
+            label="昵称",
             autofill_hints=ft.AutofillHint.NAME,
-            text_size=18,
-            height=30,
-            width=150,
+            text_size=12,
+            height=25,
+            width=165,
+            color="#001D6C",
         )
         ft_find_button = ft.ElevatedButton(
-            "查找",
-            width=80,
-            height=30,
+            text="查找",
+            width=55,
+            height=25,
+            color="#FFFFFF",
+            bgcolor="#001D6C",
         )
         # ft_import = ft.TextButton(text="导出")
-        ft_delete = ft.TextButton(text="刷新")
+        ft_update = ft.ElevatedButton(text="刷新",width=55,height=25,)
         return ft.Container(
-            content=ft.Row([ft_find, ft_find_button, ft_delete]),
+            content=ft.Row([ft_find, ft_find_button, ft_update]),
             width=500,
             # alignment=ft.Alignment.bottom_left
         )
@@ -264,19 +284,22 @@ class GroupView:
         return ft.Container(
             content=ft.Row(
                 controls=[
-                    ft.Container(ft.Text("序号", weight=ft.FontWeight.BOLD), expand=1),
+                    ft.Container(ft.Text("序号", weight=ft.FontWeight.BOLD), expand=1,alignment=ft.alignment.center),
                     ft.Container(ft.Text("昵称", weight=ft.FontWeight.BOLD), expand=3),
                     ft.Container(ft.Text("状态", weight=ft.FontWeight.BOLD), expand=1),
                 ],
                 alignment=ft.MainAxisAlignment.START,
             ),
-            padding=ft.padding.only(bottom=5),
-            border=ft.border.only(bottom=ft.BorderSide(1, ft.colors.BLACK87)),
+            width=470,
+            height=40,
+            # padding=ft.padding.only(bottom=5),
+            bgcolor="#F2F4F8",
+            # border=ft.border.only(bottom=ft.BorderSide(1, ft.colors.BLACK87)),
         )
 
     # 群成员数据
     def group_member_data(self):
-        self.ft_lv_member_list = ft.ListView(expand=True, padding=1)
+        self.ft_lv_member_list = ft.ListView(expand=True, padding=0)
         # 生成测试数据，序号，昵称，备注
         for index, data in enumerate(self.member_list):
             self.ft_lv_member_list.controls.append(
@@ -285,11 +308,12 @@ class GroupView:
         return ft.Container(
             expand=True,
             content=self.ft_lv_member_list,
-            border=ft.border.all(1, ft.colors.BLACK87),
+            # border=ft.border.all(1, ft.colors.BLACK87),
             border_radius=ft.border_radius.all(5),
         )
 
     def group_member_data_line(self, data, index):
+        bgcolor = "#FFFFFF" if index % 2 == 0 else "#F2F4F8"
         ft_index = ft.Container(
             content=ft.Row(
                 controls=[
@@ -312,5 +336,7 @@ class GroupView:
             ),
             padding=ft.padding.symmetric(vertical=5),
             ink=True,
-            border=ft.border.only(bottom=ft.BorderSide(1, ft.colors.BLACK87)),
+            bgcolor=bgcolor,
+            height=50,
+            # border=ft.border.only(bottom=ft.BorderSide(1, ft.colors.BLACK87)),
         )

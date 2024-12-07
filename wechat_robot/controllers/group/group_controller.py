@@ -101,13 +101,14 @@ class GroupController:
             )
         self.group_view.ft_lv.update()
 
-    def on_click_group_list(self, ft_group_list_data_line, data):
+    def on_click_group_list(self, ft_group_list_data_line, data,bgcolor):
         if self.group_view.selected_row and self.group_view.selected_row != ft_group_list_data_line:
             if self.group_view.selected_row in self.group_view.ft_lv.controls:
-                self.group_view.selected_row.bgcolor = None
+                print(bgcolor)
+                self.group_view.selected_row.bgcolor = bgcolor
                 self.group_view.selected_row.update()
         self.group_view.selected_row = ft_group_list_data_line
-        ft_group_list_data_line.bgcolor = ft.colors.BLUE_GREY_100
+        ft_group_list_data_line.bgcolor = "#E2EAFF"
         self.group_view.ft_lv.update()
         self.group_view.selected_row = ft_group_list_data_line
         self.update_group_members(data['wx_id'], data['nick_name'])

@@ -9,7 +9,7 @@ class LoadView:
         self.controller = controller
         self.page = page
         setup_base_page(self)
-        self.setup_page()
+        # self.setup_page()
         self.load_page_ui()
         # self.app_bar = nav_app_bar("主页")
         # print(create_app_bar("Login", on_back))
