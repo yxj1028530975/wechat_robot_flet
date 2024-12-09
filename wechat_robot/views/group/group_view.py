@@ -106,7 +106,7 @@ class GroupView:
         )
         ft_find_button = ft.ElevatedButton(
             "查找",
-            width=55,
+            # width=80,
             height=25,
             color="#FFFFFF",
             bgcolor="#001D6C",
@@ -114,7 +114,7 @@ class GroupView:
         )
         # ft_import = ft.TextButton(text="导出")
         ft_update = ft.ElevatedButton(
-            width=55,
+            # width=55,
             height=25,
             text="刷新", on_click=lambda e: self.controller.view_pull_wechat_list()
         )
@@ -172,7 +172,9 @@ class GroupView:
         )
         ft_nick_name = ft.Container(ft.Text(data["nick_name"]), expand=4)
         # ft_status = ft.Text(data["status"], size=20)
-        ft_status = ft.Container(content=ft.Text(data["status"]), expand=1)
+        # 如果状态是开启，显示绿色，否则显示红色
+        ft_color = ft.colors.GREEN if data["status"] == "开启" else ft.colors.RED                                                                                                                                                       
+        ft_status = ft.Container(content=ft.Text(data["status"]), expand=1,border=ft.border.all(1, ft_color),alignment=ft.alignment.center)
         pb = ft.PopupMenuButton(
             items=[
                 ft.PopupMenuItem(text="开启/关闭", on_click=lambda e: self.controller.open_or_close(ft_status, data)),
@@ -183,7 +185,7 @@ class GroupView:
                 ),
             ],
             on_open=lambda e: self.controller.on_click_group_list(
-                ft_group_list_data_line, data,bgcolor
+                ft_group_list_data_line, data,index+1
             ),
         )
         ft_action = ft.Container(content=pb, expand=1)
@@ -200,7 +202,7 @@ class GroupView:
                 alignment=ft.MainAxisAlignment.START,
             ),  # 绑定点击事件处理函数
             on_click=lambda e: self.controller.on_click_group_list(
-                ft_group_list_data_line, data,bgcolor
+                ft_group_list_data_line, data,index+1
             ),
             padding=ft.padding.symmetric(vertical=5),
             ink=True,
@@ -266,13 +268,15 @@ class GroupView:
         )
         ft_find_button = ft.ElevatedButton(
             text="查找",
-            width=55,
+            # width=55,
             height=25,
             color="#FFFFFF",
             bgcolor="#001D6C",
         )
         # ft_import = ft.TextButton(text="导出")
-        ft_update = ft.ElevatedButton(text="刷新",width=55,height=25,)
+        ft_update = ft.ElevatedButton(text="刷新",
+                                    #   width=55,
+                                      height=25,)
         return ft.Container(
             content=ft.Row([ft_find, ft_find_button, ft_update]),
             width=500,
@@ -284,9 +288,10 @@ class GroupView:
         return ft.Container(
             content=ft.Row(
                 controls=[
-                    ft.Container(ft.Text("序号", weight=ft.FontWeight.BOLD), expand=1,alignment=ft.alignment.center),
-                    ft.Container(ft.Text("昵称", weight=ft.FontWeight.BOLD), expand=3),
+                    ft.Container(ft.Text("序号", weight=ft.FontWeight.BOLD), expand=2,alignment=ft.alignment.center),
+                    ft.Container(ft.Text("昵称", weight=ft.FontWeight.BOLD), expand=4),
                     ft.Container(ft.Text("状态", weight=ft.FontWeight.BOLD), expand=1),
+                    ft.Container(ft.Text("", weight=ft.FontWeight.BOLD), expand=1),
                 ],
                 alignment=ft.MainAxisAlignment.START,
             ),
@@ -322,16 +327,31 @@ class GroupView:
                 ],
                 alignment=ft.MainAxisAlignment.START,
             ),
-            expand=1,
+            expand=2,
         )
-        ft_nick_name = ft.Container(ft.Text(data.get("nick_name", "")), expand=3)
-        ft_wx_id = ft.Container(ft.Text("开启"), expand=1)
+        ft_nick_name = ft.Container(ft.Text(data.get("nick_name", "")), expand=4)                                                                                                                                        
+        ft_status = ft.Container(content=ft.Text("开启"), expand=1,border=ft.border.all(1, ft.colors.GREEN),alignment=ft.alignment.center)
+        pb = ft.PopupMenuButton(
+            items=[
+                ft.PopupMenuItem(text="开启/关闭", on_click=lambda e: self.controller.open_or_close(ft_status, data)),
+                ft.PopupMenuItem(),  # divider
+                ft.PopupMenuItem(
+                    text="群设置",
+                    on_click=lambda e: self.controller.open_group_setting(),
+                ),
+            ],
+            # on_open=lambda e: self.controller.on_click_group_list(
+            #     ft_group_list_data_line, data,index+1
+            # ),
+        )
+        ft_action = ft.Container(content=pb, expand=1)
         return ft.Container(
             content=ft.Row(
                 controls=[
                     ft_index,
                     ft_nick_name,
-                    ft_wx_id,
+                    ft_status,
+                    ft_action
                 ],
             ),
             padding=ft.padding.symmetric(vertical=5),

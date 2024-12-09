@@ -31,6 +31,7 @@ class FriendView:
                         ),
                         padding=10,
                         expand=True,
+                        bgcolor="#F2F4F8",
                     ),
                 ),
                 ft.Tab(
@@ -42,12 +43,12 @@ class FriendView:
             width=1100,
         )
 
-    # 好友列表
+    # 好友列表视图
     def build_friend_list_view(self):
         return ft.Container(
             content=ft.Column(
                 controls=[
-                    # self.ft_friend_list_title,
+                    self.ft_friend_list_title,
                     self.ft_friend_list_button,
                     self.ft_friend_list_data_title,
                     self.ft_friend_list_data,
@@ -55,9 +56,9 @@ class FriendView:
                 spacing=10,
                 expand=True,
             ),
-            border=ft.border.all(1, ft.colors.BLACK87),
-            border_radius=ft.border_radius.all(5),
             padding=10,
+            bgcolor=ft.colors.WHITE,
+            border_radius=ft.border_radius.all(5),
             expand=True,
         )
 
@@ -66,6 +67,7 @@ class FriendView:
         return ft.Container(
             content=ft.Row(
                 controls=[
+                    ft.Icon(ft.icons.PERSON),
                     ft.Text("好友列表", style="titleLarge"),
                 ],
                 alignment=ft.MainAxisAlignment.START,
@@ -76,26 +78,30 @@ class FriendView:
     def friend_list_button(self):
         ft_find = ft.TextField(
             label="查找",
-            text_size=18,
-            height=30,
-            width=150,
+            text_size=12,
+            height=25,
+            width=165,
+            border=ft.border.all(1, ft.colors.BLACK87),
+            bgcolor="#F2F4F8",
+            color="#000000",
         )
         ft_find_button = ft.ElevatedButton(
             "查找",
-            width=80,
-            height=30,
+            height=25,
+            color="#FFFFFF",
+            bgcolor="#001D6C",
             on_click=lambda e: self.controller.search_wechat_list(ft_find.value),
         )
-        ft_refresh = ft.TextButton(
+        ft_refresh = ft.ElevatedButton(
             text="刷新",
+            height=25,
+            color="#FFFFFF",
+            bgcolor="#001D6C",
             on_click=lambda e: self.controller.view_pull_wechat_list(),
         )
         return ft.Container(
-            content=ft.Row(
-                controls=[ft_find, ft_find_button, ft_refresh],
-                spacing=10,
-                alignment=ft.MainAxisAlignment.START,
-            ),
+            content=ft.Row([ft_find, ft_find_button, ft_refresh], spacing=10),
+            width=550,
         )
 
     # 好友列表数据标题
@@ -103,51 +109,60 @@ class FriendView:
         return ft.Container(
             content=ft.Row(
                 controls=[
-                    ft.Container(ft.Text("序号", weight=ft.FontWeight.BOLD), expand=1),
-                    ft.Container(ft.Text("昵称", weight=ft.FontWeight.BOLD), expand=2),
-                    ft.Container(ft.Text("微信ID", weight=ft.FontWeight.BOLD), expand=2),
+                    ft.Container(ft.Text("序号", weight=ft.FontWeight.BOLD), expand=2, alignment=ft.alignment.center),
+                    ft.Container(ft.Text("昵称", weight=ft.FontWeight.BOLD), expand=3),
+                    ft.Container(ft.Text("微信ID", weight=ft.FontWeight.BOLD), expand=3),
                     ft.Container(ft.Text("状态", weight=ft.FontWeight.BOLD), expand=1),
-                    ft.Container(ft.Text("", weight=ft.FontWeight.BOLD), expand=1),
+                    ft.Container(ft.Text("操作", weight=ft.FontWeight.BOLD), expand=1),
                 ],
                 alignment=ft.MainAxisAlignment.START,
             ),
             padding=ft.padding.only(bottom=5),
-            border=ft.border.only(bottom=ft.BorderSide(1, ft.colors.BLACK87)),
+            bgcolor="#F2F4F8",
+            border=ft.border.only(bottom=ft.BorderSide(1, ft.colors.GREY)),
         )
 
     # 好友列表数据
     def friend_list_data(self):
-        self.ft_lv = ft.ListView(expand=True, spacing=5)
-        for index, data in enumerate(self.friend_list, start=1):
+        self.ft_lv = ft.ListView(expand=True, spacing=0, padding=0)
+        for index, data in enumerate(self.friend_list):
             self.ft_lv.controls.append(self.friend_list_data_line(data, index))
         return ft.Container(
             expand=True,
             content=self.ft_lv,
-            border=ft.border.all(1, ft.colors.BLACK87),
             border_radius=ft.border_radius.all(5),
         )
 
     def friend_list_data_line(self, data, index):
+        bgcolor = "#FFFFFF" if index % 2 == 0 else "#F2F4F8"
         ft_index = ft.Container(
             content=ft.Row(
                 controls=[
                     ft.Checkbox(value=False),
-                    ft.Text(str(index)),
+                    ft.Text(str(index + 1)),
                 ],
                 alignment=ft.MainAxisAlignment.START,
             ),
-            expand=1,
+            expand=2,
         )
-        ft_nick_name = ft.Container(ft.Text(data.get("nick_name", "")), expand=2)
-        ft_wx_id = ft.Container(ft.Text(data.get("wx_id", "")), expand=2)
-        ft_status = ft.Container(ft.Text(data.get("status", "")), expand=1)
+        ft_nick_name = ft.Container(ft.Text(data.get("nick_name", "")), expand=3)
+        ft_wx_id = ft.Container(ft.Text(data.get("wx_id", "")), expand=3)
+        # 根据状态设置边框颜色
+        status_text = data.get("status", "未知")
+        status_color = ft.colors.GREEN if status_text == "开启" else ft.colors.RED
+        ft_status = ft.Container(
+            content=ft.Text(status_text),
+            expand=1,
+            border=ft.border.all(1, status_color),
+            alignment=ft.alignment.center,
+        )
         pb = ft.PopupMenuButton(
             items=[
                 ft.PopupMenuItem(
                     text="开启/关闭",
                     on_click=lambda e: self.controller.open_or_close(ft_status, data)
                 ),
-                ft.PopupMenuItem(),  # divider
+                ft.PopupMenuItem(),  # 分隔线
                 ft.PopupMenuItem(
                     text="好友设置",
                     on_click=lambda e: self.controller.open_friend_setting(),
@@ -172,6 +187,6 @@ class FriendView:
                 ft_friend_list_data_line, data
             ),
             ink=True,
-            border=ft.border.only(bottom=ft.BorderSide(1, ft.colors.BLACK87)),
+            bgcolor=bgcolor,
         )
         return ft_friend_list_data_line

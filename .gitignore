@@ -6,7 +6,6 @@ __pycache__/
 .mypy_cache/
 .vscode/
 .venv
-data
 #config/config.ini
 # C extensions
 *.so

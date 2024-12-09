@@ -101,10 +101,10 @@ class GroupController:
             )
         self.group_view.ft_lv.update()
 
-    def on_click_group_list(self, ft_group_list_data_line, data,bgcolor):
+    def on_click_group_list(self, ft_group_list_data_line, data,index):
         if self.group_view.selected_row and self.group_view.selected_row != ft_group_list_data_line:
             if self.group_view.selected_row in self.group_view.ft_lv.controls:
-                print(bgcolor)
+                bgcolor = "#FFFFFF" if index % 2 == 0 else "#F2F4F8"
                 self.group_view.selected_row.bgcolor = bgcolor
                 self.group_view.selected_row.update()
         self.group_view.selected_row = ft_group_list_data_line
