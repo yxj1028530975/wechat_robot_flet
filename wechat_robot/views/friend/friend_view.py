@@ -16,9 +16,11 @@ class FriendView:
         self.ft_friend_list_data_title = self.friend_list_data_title()
         self.ft_friend_list_data = self.friend_list_data()
 
-        return ft.Tabs(
+        return ft.Container(content=ft.Tabs(
             selected_index=0,
             animation_duration=300,
+            label_text_style=ft.TextStyle(size=18,weight=ft.FontWeight.BOLD),
+
             tabs=[
                 ft.Tab(
                     text="好友管理",
@@ -40,8 +42,10 @@ class FriendView:
                 ),
             ],
             expand=True,
-            width=1100,
-        )
+            # height=600,
+            width=1150,
+        ),
+        padding=ft.padding.only(left=20, top=0, right=0, bottom=0),bgcolor="#F2F4F8")
 
     # 好友列表视图
     def build_friend_list_view(self):
@@ -56,10 +60,14 @@ class FriendView:
                 spacing=10,
                 expand=True,
             ),
+            height=594,
+            width=1000,
             padding=10,
+            # 增加边框
+            # border=ft.border.all(1, ft.colors.BLACK87),
             bgcolor=ft.colors.WHITE,
             border_radius=ft.border_radius.all(5),
-            expand=True,
+
         )
 
     # 标题，靠左
@@ -68,22 +76,21 @@ class FriendView:
             content=ft.Row(
                 controls=[
                     ft.Icon(ft.icons.PERSON),
-                    ft.Text("好友列表", style="titleLarge"),
-                ],
-                alignment=ft.MainAxisAlignment.START,
+                    ft.Text("好友列表")
+                ]
             ),
         )
 
     # 按钮
     def friend_list_button(self):
         ft_find = ft.TextField(
-            label="查找",
+            label="昵称",
             text_size=12,
             height=25,
             width=165,
             border=ft.border.all(1, ft.colors.BLACK87),
             bgcolor="#F2F4F8",
-            color="#000000",
+            color="#F2F4F8",
         )
         ft_find_button = ft.ElevatedButton(
             "查找",
@@ -95,8 +102,6 @@ class FriendView:
         ft_refresh = ft.ElevatedButton(
             text="刷新",
             height=25,
-            color="#FFFFFF",
-            bgcolor="#001D6C",
             on_click=lambda e: self.controller.view_pull_wechat_list(),
         )
         return ft.Container(
@@ -109,17 +114,17 @@ class FriendView:
         return ft.Container(
             content=ft.Row(
                 controls=[
-                    ft.Container(ft.Text("序号", weight=ft.FontWeight.BOLD), expand=2, alignment=ft.alignment.center),
-                    ft.Container(ft.Text("昵称", weight=ft.FontWeight.BOLD), expand=3),
+                    ft.Container(ft.Text("序号", weight=ft.FontWeight.BOLD), expand=1, alignment=ft.alignment.center),
+                    ft.Container(ft.Text("昵称", weight=ft.FontWeight.BOLD), expand=4),
                     ft.Container(ft.Text("微信ID", weight=ft.FontWeight.BOLD), expand=3),
-                    ft.Container(ft.Text("状态", weight=ft.FontWeight.BOLD), expand=1),
-                    ft.Container(ft.Text("操作", weight=ft.FontWeight.BOLD), expand=1),
+                    ft.Container(ft.Text("状态", weight=ft.FontWeight.BOLD), expand=1, alignment=ft.alignment.center),
+                    ft.Container(ft.Text("操作", weight=ft.FontWeight.BOLD), expand=1, alignment=ft.alignment.center),
                 ],
                 alignment=ft.MainAxisAlignment.START,
             ),
-            padding=ft.padding.only(bottom=5),
+            width=1100,
+            height=40,
             bgcolor="#F2F4F8",
-            border=ft.border.only(bottom=ft.BorderSide(1, ft.colors.GREY)),
         )
 
     # 好友列表数据
@@ -139,13 +144,13 @@ class FriendView:
             content=ft.Row(
                 controls=[
                     ft.Checkbox(value=False),
-                    ft.Text(str(index + 1)),
+                    ft.Text(str(index)),
                 ],
                 alignment=ft.MainAxisAlignment.START,
             ),
-            expand=2,
+            expand=1,
         )
-        ft_nick_name = ft.Container(ft.Text(data.get("nick_name", "")), expand=3)
+        ft_nick_name = ft.Container(ft.Text(data.get("nick_name", "")), expand=4)
         ft_wx_id = ft.Container(ft.Text(data.get("wx_id", "")), expand=3)
         # 根据状态设置边框颜色
         status_text = data.get("status", "未知")

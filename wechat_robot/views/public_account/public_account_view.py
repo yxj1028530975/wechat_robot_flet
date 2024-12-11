@@ -17,9 +17,10 @@ class PublicAccountView:
         self.ft_public_account_list_data_title = self.public_account_list_data_title()
         self.ft_public_account_list_data = self.public_account_list_data()
 
-        return ft.Tabs(
+        return ft.Container(content=ft.Tabs(
             selected_index=0,
             animation_duration=300,
+            label_text_style=ft.TextStyle(size=18,weight=ft.FontWeight.BOLD),
             tabs=[
                 ft.Tab(
                     text="公众号管理",
@@ -32,6 +33,8 @@ class PublicAccountView:
                         ),
                         padding=10,
                         expand=True,
+                        bgcolor="#F2F4F8",
+
                     ),
                 ),
                 ft.Tab(
@@ -40,15 +43,17 @@ class PublicAccountView:
                 ),
             ],
             expand=True,
-            width=1100,
-        )
+            width=1150,
+        ),
+        padding=ft.padding.only(left=20, top=0, right=0, bottom=0),bgcolor="#F2F4F8")
+
 
     # 公众号列表
     def build_public_account_list_view(self):
         return ft.Container(
             content=ft.Column(
                 controls=[
-                    # self.ft_public_account_list_title,
+                    self.ft_public_account_list_title,
                     self.ft_public_account_list_button,
                     self.ft_public_account_list_data_title,
                     self.ft_public_account_list_data,
@@ -56,10 +61,14 @@ class PublicAccountView:
                 spacing=10,
                 expand=True,
             ),
-            border=ft.border.all(1, ft.colors.BLACK87),
-            border_radius=ft.border_radius.all(5),
+            height=594,
+            width=1000,
             padding=10,
-            expand=True,
+            # 增加边框
+            # border=ft.border.all(1, ft.colors.BLACK87),
+            bgcolor=ft.colors.WHITE,
+            border_radius=ft.border_radius.all(5),
+
         )
 
     # 标题，靠左
@@ -67,36 +76,38 @@ class PublicAccountView:
         return ft.Container(
             content=ft.Row(
                 controls=[
-                    ft.Text("公众号列表", style="titleLarge"),
+                    ft.Icon(ft.icons.PUBLIC),
+                    ft.Text("公众号列表"),
                 ],
-                alignment=ft.MainAxisAlignment.START,
             ),
         )
 
     # 按钮
     def public_account_list_button(self):
         ft_find = ft.TextField(
-            label="查找",
-            autofill_hints=ft.AutofillHint.NAME,
-            text_size=18,
-            height=30,
-            width=150,
+            label="昵称",
+            text_size=12,
+            height=25,
+            width=165,
+            border=ft.border.all(1, ft.colors.BLACK87),
+            bgcolor="#F2F4F8",
+            color="#F2F4F8",
         )
         ft_find_button = ft.ElevatedButton(
             "查找",
-            width=80,
-            height=30,
+            height=25,
+            color="#FFFFFF",
+            bgcolor="#001D6C",
             on_click=lambda e: self.controller.search_wechat_list(ft_find.value),
         )
-        ft_refresh = ft.TextButton(
-            text="刷新", on_click=lambda e: self.controller.view_pull_wechat_list()
+        ft_refresh = ft.ElevatedButton(
+            text="刷新",
+            height=25,
+            on_click=lambda e: self.controller.view_pull_wechat_list(),
         )
         return ft.Container(
-            content=ft.Row(
-                controls=[ft_find, ft_find_button, ft_refresh],
-                spacing=10,
-                alignment=ft.MainAxisAlignment.START,
-            ),
+            content=ft.Row([ft_find, ft_find_button, ft_refresh], spacing=10),
+            width=550,
         )
 
     # 公众号列表数据标题
@@ -114,23 +125,26 @@ class PublicAccountView:
                 ],
                 alignment=ft.MainAxisAlignment.START,
             ),
-            padding=ft.padding.only(bottom=5),
-            border=ft.border.only(bottom=ft.BorderSide(1, ft.colors.BLACK87)),
+            width=1100,
+            height=40,
+            bgcolor="#F2F4F8",
+
         )
 
     # 公众号列表数据
     def public_account_list_data(self):
         self.ft_lv = ft.ListView(expand=1, spacing=5)
-        for index, data in enumerate(self.public_account_list, start=1):
+        for index, data in enumerate(self.public_account_list):
             self.ft_lv.controls.append(self.public_account_list_data_line(data, index))
         return ft.Container(
             expand=True,
             content=self.ft_lv,
-            border=ft.border.all(1, ft.colors.BLACK87),
             border_radius=ft.border_radius.all(5),
         )
 
     def public_account_list_data_line(self, data, index):
+        bgcolor = "#FFFFFF" if index % 2 == 0 else "#F2F4F8"
+
         ft_index = ft.Container(
             content=ft.Row(
                 controls=[
@@ -159,6 +173,7 @@ class PublicAccountView:
                 ft_public_account_list_data_line, data
             ),
             ink=True,
-            border=ft.border.only(bottom=ft.BorderSide(1, ft.colors.BLACK87)),
+            bgcolor=bgcolor,
+
         )
         return ft_public_account_list_data_line
