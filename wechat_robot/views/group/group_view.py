@@ -25,33 +25,35 @@ class GroupView:
         self.group_list_view = self.build_group_list_view()
         self.group_member_view = self.build_group_member_view()
         # 返回整个群组视图
-        return ft.Container(content=
-                            ft.Tabs(
-            selected_index=0,
-            animation_duration=300,
-            label_text_style=ft.TextStyle(size=18,weight=ft.FontWeight.BOLD),
-            tabs=[
-                ft.Tab(
-                    text="群管理",
-                    content=ft.Container(
-                        content=ft.Row(
-                            controls=[
-                                self.build_group_list_view(),
-                                self.build_group_member_view(),
-                            ]
+        return ft.Container(
+            content=ft.Tabs(
+                selected_index=0,
+                animation_duration=300,
+                label_text_style=ft.TextStyle(size=18, weight=ft.FontWeight.BOLD),
+                tabs=[
+                    ft.Tab(
+                        text="群管理",
+                        content=ft.Container(
+                            content=ft.Row(
+                                controls=[
+                                    self.build_group_list_view(),
+                                    self.build_group_member_view(),
+                                ]
+                            ),
                         ),
                     ),
-                ),
-                ft.Tab(
-                    text="帮助说明",
-                    content=ft.Text("This is Tab 4"),
-                ),
-            ],
-            expand=True,
-            # height=600,
-            width=1150,
-        ),padding=ft.padding.only(left=20, top=0, right=0, bottom=0),bgcolor="#F2F4F8")
-
+                    ft.Tab(
+                        text="帮助说明",
+                        content=ft.Text("This is Tab 4"),
+                    ),
+                ],
+                expand=True,
+                # height=600,
+                width=1150,
+            ),
+            padding=ft.padding.only(left=20, top=0, right=0, bottom=0),
+            bgcolor="#F2F4F8",
+        )
 
     # 群列表
     def build_group_list_view(self):
@@ -72,7 +74,6 @@ class GroupView:
             bgcolor=ft.colors.WHITE,
             border_radius=ft.border_radius.all(5),
             # box-shadow: 2px 2px 2px 0px #69707733;
-
             # shadow=ft.BoxShadow(
             #     spread_radius=1,
             #     # blur_radius=15,
@@ -86,7 +87,8 @@ class GroupView:
     def group_list_title(self):
         return ft.Container(
             content=ft.Row(
-                [   ft.Icon(ft.icons.GROUP),
+                [
+                    ft.Icon(ft.icons.GROUP),
                     ft.Text("群列表"),
                 ]
             ),
@@ -116,7 +118,8 @@ class GroupView:
         ft_update = ft.ElevatedButton(
             # width=55,
             height=25,
-            text="刷新", on_click=lambda e: self.controller.view_pull_wechat_list()
+            text="刷新",
+            on_click=lambda e: self.controller.view_pull_wechat_list(),
         )
         return ft.Container(
             content=ft.Row([ft_find, ft_find_button, ft_update]),
@@ -128,14 +131,16 @@ class GroupView:
         return ft.Container(
             content=ft.Row(
                 controls=[
-                    ft.Container(ft.Text("序号", weight=ft.FontWeight.BOLD), expand=2,alignment=ft.alignment.center),
+                    ft.Container(
+                        ft.Text("序号", weight=ft.FontWeight.BOLD),
+                        expand=2,
+                        alignment=ft.alignment.center,
+                    ),
                     ft.Container(
                         ft.Text("群名称", weight=ft.FontWeight.BOLD), expand=4
                     ),
-                    ft.Container(
-                        ft.Text("状态", weight=ft.FontWeight.BOLD), expand=1
-                    ),
-                    ft.Container(ft.Text("", weight=ft.FontWeight.BOLD), expand=1),
+                    ft.Container(ft.Text("状态", weight=ft.FontWeight.BOLD), expand=1,alignment=ft.alignment.center,),
+                    ft.Container(ft.Text("操作", weight=ft.FontWeight.BOLD), expand=1,alignment=ft.alignment.center,),
                 ],
                 alignment=ft.MainAxisAlignment.START,
             ),
@@ -173,11 +178,19 @@ class GroupView:
         ft_nick_name = ft.Container(ft.Text(data["nick_name"]), expand=4)
         # ft_status = ft.Text(data["status"], size=20)
         # 如果状态是开启，显示绿色，否则显示红色
-        ft_color = ft.colors.GREEN if data["status"] == "开启" else ft.colors.RED                                                                                                                                                       
-        ft_status = ft.Container(content=ft.Text(data["status"]), expand=1,border=ft.border.all(1, ft_color),alignment=ft.alignment.center)
+        ft_color = ft.colors.GREEN if data["status"] == "开启" else ft.colors.RED
+        ft_status = ft.Container(
+            content=ft.Text(data["status"]),
+            expand=1,
+            border=ft.border.all(1, ft_color),
+            alignment=ft.alignment.center,
+        )
         pb = ft.PopupMenuButton(
             items=[
-                ft.PopupMenuItem(text="开启/关闭", on_click=lambda e: self.controller.open_or_close(ft_status, data)),
+                ft.PopupMenuItem(
+                    text="开启/关闭",
+                    on_click=lambda e: self.controller.open_or_close(ft_status, data),
+                ),
                 ft.PopupMenuItem(),  # divider
                 ft.PopupMenuItem(
                     text="群设置",
@@ -185,11 +198,11 @@ class GroupView:
                 ),
             ],
             on_open=lambda e: self.controller.on_click_group_list(
-                ft_group_list_data_line, data,index+1
+                ft_group_list_data_line, data, index + 1
             ),
         )
         ft_action = ft.Container(content=pb, expand=1)
-        
+
         ft_group_list_data_line = ft.Container(
             content=ft.Row(
                 controls=[
@@ -202,7 +215,7 @@ class GroupView:
                 alignment=ft.MainAxisAlignment.START,
             ),  # 绑定点击事件处理函数
             on_click=lambda e: self.controller.on_click_group_list(
-                ft_group_list_data_line, data,index+1
+                ft_group_list_data_line, data, index + 1
             ),
             padding=ft.padding.symmetric(vertical=5),
             ink=True,
@@ -237,22 +250,27 @@ class GroupView:
     def group_member_title(self):
 
         self.group_member_text = ft.Text(
-            f"[当前:{self.group_name}]", color="#001D6C",
+            f"[当前:{self.group_name}]",
+            color="#001D6C",
         )
         return ft.Container(
             content=ft.Row(
                 controls=[
                     ft.Container(
-                        ft.Row(controls=[
-                        ft.Icon(ft.icons.GROUPS),
-                        ft.Text("群成员"),]),),
+                        ft.Row(
+                            controls=[
+                                ft.Icon(ft.icons.GROUPS),
+                                ft.Text("群成员"),
+                            ]
+                        ),
+                    ),
                     ft.Container(
                         self.group_member_text,
                         alignment=ft.alignment.center_right,
                         expand=3,
                     ),
                 ],
-                alignment=ft.MainAxisAlignment.SPACE_BETWEEN
+                alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
             ),
         )
 
@@ -274,9 +292,11 @@ class GroupView:
             bgcolor="#001D6C",
         )
         # ft_import = ft.TextButton(text="导出")
-        ft_update = ft.ElevatedButton(text="刷新",
-                                    #   width=55,
-                                      height=25,)
+        ft_update = ft.ElevatedButton(
+            text="刷新",
+            #   width=55,
+            height=25,
+        )
         return ft.Container(
             content=ft.Row([ft_find, ft_find_button, ft_update]),
             width=500,
@@ -288,10 +308,14 @@ class GroupView:
         return ft.Container(
             content=ft.Row(
                 controls=[
-                    ft.Container(ft.Text("序号", weight=ft.FontWeight.BOLD), expand=2,alignment=ft.alignment.center),
+                    ft.Container(
+                        ft.Text("序号", weight=ft.FontWeight.BOLD),
+                        expand=2,
+                        alignment=ft.alignment.center,
+                    ),
                     ft.Container(ft.Text("昵称", weight=ft.FontWeight.BOLD), expand=4),
-                    ft.Container(ft.Text("状态", weight=ft.FontWeight.BOLD), expand=1),
-                    ft.Container(ft.Text("", weight=ft.FontWeight.BOLD), expand=1),
+                    ft.Container(ft.Text("状态", weight=ft.FontWeight.BOLD), expand=1,alignment=ft.alignment.center,),
+                    ft.Container(ft.Text("操作", weight=ft.FontWeight.BOLD), expand=1,alignment=ft.alignment.center,),
                 ],
                 alignment=ft.MainAxisAlignment.START,
             ),
@@ -329,11 +353,19 @@ class GroupView:
             ),
             expand=2,
         )
-        ft_nick_name = ft.Container(ft.Text(data.get("nick_name", "")), expand=4)                                                                                                                                        
-        ft_status = ft.Container(content=ft.Text("开启"), expand=1,border=ft.border.all(1, ft.colors.GREEN),alignment=ft.alignment.center)
+        ft_nick_name = ft.Container(ft.Text(data.get("nick_name", "")), expand=4)
+        ft_status = ft.Container(
+            content=ft.Text("开启"),
+            expand=1,
+            border=ft.border.all(1, ft.colors.GREEN),
+            alignment=ft.alignment.center,
+        )
         pb = ft.PopupMenuButton(
             items=[
-                ft.PopupMenuItem(text="开启/关闭", on_click=lambda e: self.controller.open_or_close(ft_status, data)),
+                ft.PopupMenuItem(
+                    text="开启/关闭",
+                    on_click=lambda e: self.controller.open_or_close(ft_status, data),
+                ),
                 ft.PopupMenuItem(),  # divider
                 ft.PopupMenuItem(
                     text="群设置",
@@ -347,12 +379,7 @@ class GroupView:
         ft_action = ft.Container(content=pb, expand=1)
         return ft.Container(
             content=ft.Row(
-                controls=[
-                    ft_index,
-                    ft_nick_name,
-                    ft_status,
-                    ft_action
-                ],
+                controls=[ft_index, ft_nick_name, ft_status, ft_action],
             ),
             padding=ft.padding.symmetric(vertical=5),
             ink=True,

@@ -68,4 +68,4 @@ if __name__ == "__main__":
     api_thread.start()
     
     # 运行 Flet 桌面应用程序
-    ft.app(target=main, view=ft.AppView.FLET_APP,assets_dir="assets")
+    ft.app(target=main, view=ft.AppView.FLET_APP_HIDDEN,assets_dir="assets")

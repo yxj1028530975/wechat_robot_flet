@@ -16,7 +16,6 @@ def setup_base_page(self):
     )
     # self.page.window.title_bar_hidden = True
     self.page.controls.clear()
-    self.page.window.center()
     self.page.window.icon = "img/robot_icon.ico"
     self.page.bgcolor = ft.colors.WHITE
     self.page.window.width = get_config("wechat_robot","main_height")

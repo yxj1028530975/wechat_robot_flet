@@ -15,6 +15,7 @@ Base.metadata.create_all(bind=engine)
 class App:
     def __init__(self, page: ft.Page):
         self.page = page
+        self.page.window.center()
         self.route_to_controller = {
             "/": LoginController,
             "/signup": SignUpController,
