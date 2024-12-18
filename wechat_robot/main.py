@@ -23,8 +23,8 @@ class App:
             "/main": MainController,
             # ... other routes ...
         }
-        self.history = []  # Navigation history
-        self.navigate("/main")
+        self.history = []  
+        self.navigate("/")
 
     def navigate(self, route):
         if route in self.route_to_controller:
@@ -37,9 +37,9 @@ class App:
         
         self.history.append(route)
 
-    def go_back(self, event):  # Accept the event parameter
+    def go_back(self, event):  
         if len(self.history) > 1:
-            self.history.pop()  # Remove current page from history
+            self.history.pop()  
             previous_route = self.history[-1]
             self.navigate(previous_route)
             

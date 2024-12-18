@@ -18,25 +18,12 @@ def setup_base_page(self):
     self.page.controls.clear()
     self.page.window.icon = "img/robot_icon.ico"
     self.page.bgcolor = ft.colors.WHITE
+    self.page.window.center()
     self.page.window.width = get_config("wechat_robot","main_height")
     self.page.window.height = get_config("wechat_robot","main_width")
     self.page.padding = 0
-    # self.page.window.resizable = False
-    # self.page.window.always_on_top = False
-    # self.page.window.movable = True
-    # self.page.window.bgcolor = ft.Colors.TRANSPARENT
-    # self.page.bgcolor = ft.Colors.TRANSPARENT
-    # self.page.window.title_bar_hidden = True
-    # self.page.window.title_bar_buttons_hidden = True
-    # self.page.window.frameless = True
     self.page.title = get_config("wechat_robot", "name")
-    # self.page.window.bgcolor = ft.Colors.BLUE_100
-    # # self.page.bgcolor = ft.Colors.TRANSPARENT
-    # self.page.window.title_bar_hidden = True
-    # self.page.window.frameless = True
-    # self.page.window.left = 400
-    # self.page.window.top = 200
-    # self.page.add(ft.ElevatedButton("I'm a floating button!"))
+    
 def nav_app_bar(title: str) -> ft.AppBar:
     return ft.AppBar(
         leading=ft.Icon(ft.icons.PALETTE),
