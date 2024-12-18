@@ -14,7 +14,7 @@
 
 <div align="center">
     <kbd>
-      <video width="100%" align="center" src="https://github.com/user-attachments/assets/5a3b99fc-ac17-474b-98c7-4a04d294201" alt="demo">
+      <video width="100%" align="center" src="https://github.com/user-attachments/assets/80a8c246-1698-4396-8415-a6d55ad85e8a" alt="demo">
     </kbd>
 </div>
 
