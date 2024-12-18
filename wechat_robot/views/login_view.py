@@ -23,6 +23,7 @@ class LoginView:
     def setup_page(self):
         self.page.controls.clear()
         self.page.window.center()
+        self.page.window.icon = "img/robot_icon.ico"
         self.page.bgcolor = ft.colors.WHITE
         self.page.window.width = 350
         self.page.window.height = 600

@@ -104,7 +104,7 @@ class GroupView:
             width=165,
             border=ft.border.all(1, ft.colors.BLACK87),
             bgcolor="#F2F4F8",
-            color="#F2F4F8",
+            # color="#F2F4F8",
         )
         ft_find_button = ft.ElevatedButton(
             "查找",
