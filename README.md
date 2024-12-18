@@ -14,7 +14,7 @@
 
 <div align="center">
     <kbd>
-      <video width="100%" align="center" src="docs/wechat_robot/wechat_robot_flet.mp4" alt="demo">
+      <video width="100%" align="center" src="https://github.com/user-attachments/assets/5a3b99fc-ac17-474b-98c7-4a04d294201" alt="demo">
     </kbd>
 </div>
 
