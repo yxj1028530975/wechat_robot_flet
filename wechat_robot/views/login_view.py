@@ -23,6 +23,12 @@ class LoginView:
     def setup_page(self):
         self.page.controls.clear()
         self.page.window.center()
+        self.page.fonts = {
+            "alifont": "/fonts/AlibabaPuHuiTi-3-55-Regular.ttf",
+        }
+        self.page.theme = ft.Theme(
+            font_family="alifont",
+        )
         self.page.window.icon = "img/robot_icon.ico"
         self.page.bgcolor = ft.colors.WHITE
         self.page.window.width = 350

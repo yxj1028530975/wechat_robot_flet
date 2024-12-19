@@ -10,6 +10,12 @@ class SignUpView:
 
     def setup_page(self):
         self.page.bgcolor = ft.colors.WHITE
+        self.page.fonts = {
+            "alifont": "/fonts/AlibabaPuHuiTi-3-55-Regular.ttf",
+        }
+        self.page.theme = ft.Theme(
+            font_family="alifont",
+        )
         self.page.window.width = 350
         self.page.window.height = 600
         self.page.window.resizable = True
