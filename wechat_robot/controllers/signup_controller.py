@@ -1,17 +1,18 @@
 import flet as ft
 from wechat_robot.views.signup_view import SignUpView
 from wechat_robot.utils.ft_utils import msg_erro
+from wechat_robot.utils.config_utils import get_config
+from wechat_robot.utils.httpx_handle import HttpxHandle
 
 class SignUpController:
     def __init__(self, page: ft.Page, app):
         self.page = page
         self.app = app
         self.view = SignUpView(page, self)
-        
-    def on_signup(self, first_name, last_name, email, phone, password, confirm_password):
+    
+    def on_signup(self, name,  email, phone, password, confirm_password):
         user_data = {
-            'first_name': first_name,
-            'last_name': last_name,
+            'name': name,
             'email': email,
             'phone': phone,
             'password': password,
@@ -26,10 +27,18 @@ class SignUpController:
             return
         else:
             print("用户注册成功！")
+        base_url = get_config("wechat_robot_server", "login_url")
+        client = HttpxHandle(base_url=base_url, timeout=2)
+        res_data = client.request(
+            "POST", "/api/register", json_data=user_data
+        )
+        if res_data.get("code") == 200:
+            print("注册成功")
+            self.app.navigate("/")
+        else:
+            self.error(res_data.get("msg", "注册失败"))
                 
     def on_back(self):
-        # 导航回到上一个页面
-        print("你点击了返回")
         self.app.navigate("/")
         print("你点击了返回")
 

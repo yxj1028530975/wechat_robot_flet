@@ -66,22 +66,7 @@ def get_config(section: str = 'wechat',option: str = 'version') -> Optional[str]
         logger.error(f"读取配置文件时发生错误: {e}")
     return None
 
-# 设置配置文件中的配置
-# def set_config(section: str = 'wechat',option: str = 'version',value: str = '3.9.11.19') -> Optional[str]:
-    # """
-    # 设置配置文件中的配置项。
 
-    # 参数:
-    #     section (str): 配置部分名称，默认值为 'wechat'。
-    #     option (str): 配置项名称,，默认值为 'version'。
-    #     value (str): 配置项的值，默认值为 '3.9.11.19'。
-    # """
-    # try:
-    #     config.set(section, option, value)
-    #     with open(config_file, 'w', encoding='utf-8') as f:
-    #         config.write(f)
-    # except Exception as e:
-    #     logger.error(f"写入配置文件时发生错误: {e}")
         
 
 if __name__ == '__main__':

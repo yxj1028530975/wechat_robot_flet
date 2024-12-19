@@ -86,6 +86,8 @@ class LoginView:
             width=300,
             text_size=12,
             color=ft.colors.BLACK,
+            border_color="#8EA5C0",
+            # border_width=1,
         )
 
         # 密码输入框
@@ -96,6 +98,7 @@ class LoginView:
             height=40,
             width=300,
             color=ft.colors.BLACK,
+            border_color="#8EA5C0",
             password=True,
             can_reveal_password=True
         )

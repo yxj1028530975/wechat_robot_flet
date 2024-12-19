@@ -22,3 +22,4 @@ fun_setting_tip = "功能提示只支持文字、emoji表情,换行in或[enter�
 
 [wechat_robot_server]
 url = "https://yxj101.cn"
+login_url = "https://api.livetools.top"

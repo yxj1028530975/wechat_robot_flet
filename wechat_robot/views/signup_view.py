@@ -36,14 +36,6 @@ class SignUpView:
             weight=ft.FontWeight.BOLD
         )
 
-        # 注册标题
-        lb_cadastro = ft.Text(
-            "用户注册",
-            size=12,
-            color=ft.colors.BLACK,
-            weight=ft.FontWeight.BOLD,
-        )
-
         # 用户名输入框
         ft_firstname = ft.TextField(
             height=40,
@@ -51,6 +43,7 @@ class SignUpView:
             color=ft.colors.BLACK,
             label="用户名",
             width=300,
+            border_color="#8EA5C0",
         )
 
         # 邮箱输入框
@@ -60,6 +53,7 @@ class SignUpView:
             label='邮箱',
             color=ft.colors.BLACK,
             width=300,
+            border_color="#8EA5C0",
         )
 
         # 手机号码输入框
@@ -69,6 +63,7 @@ class SignUpView:
             text_size=12,
             color=ft.colors.BLACK,
             width=300,
+            border_color="#8EA5C0",
         )
 
         # 密码输入框
@@ -80,6 +75,7 @@ class SignUpView:
             password=True,
             can_reveal_password=True,
             width=300,
+            border_color="#8EA5C0",
         )
 
         # 确认密码输入框
@@ -91,6 +87,7 @@ class SignUpView:
             password=True,
             can_reveal_password=True,
             width=300,
+            border_color="#8EA5C0",
         )
 
         # 注册按钮
@@ -128,7 +125,6 @@ class SignUpView:
         main_container = ft.Column(
             controls=[
                 ft_img_name,
-                lb_cadastro,
                 ft_firstname,
                 ft_email,
                 ft_telefone,

@@ -1,23 +1,25 @@
 import flet as ft
 from wechat_robot.views.login_view import LoginView
+from wechat_robot.utils.config_utils import get_config
+from wechat_robot.utils.httpx_handle import HttpxHandle
 
 
 class LoginController:
-    def __init__(self, page: ft.Page, app):   
+    def __init__(self, page: ft.Page, app):
         self.page = page
         self.app = app
         self.view = LoginView(page, self)
 
     def on_login(self, username, password):
-        print(username, password)
-        if username == "" or password == "":
-            print("请输入账号或密码")
-        elif username == "1" and password == "1":
+        base_url = get_config("wechat_robot_server", "login_url")
+        client = HttpxHandle(base_url=base_url, timeout=2)
+        res_data = client.request(
+            "POST", "/api/login", json_data={"identifier": username, "password": password}
+        )
+        if res_data.get("code") == 200:
             print("登录成功")
             self.app.navigate("/load")
-        else:
-            print("登录失败")
-       
+
     def on_signup(self):
         self.app.navigate("/signup")
 
