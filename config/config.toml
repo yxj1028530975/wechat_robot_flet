@@ -14,7 +14,7 @@ port = "9000"
 [group_template]
 out_setting = "╒═══【成员离别】═══╗\n🍂 启禀群主，有成员离群🚶‍♂️\n     昵称：[name]\n╘═══【感谢陪伴】═══╝"
 out_setting_tip = "退群提醒只支持文字、emoji表情,换行in或[enter群用户:[name]"
-welcome_setting = "╒═══【新成员报到】═══╗\n🎉 启禀群主，新成员驾到！🚪\n    昵称：[name]\n    领路人：[inviter]👫\n╘═══【欢迎加入】═══╝\n\n 📝开源免费软件:  https://github.com/yxj1028530975/wechat_robot_flet.git（记得 Star ⭐️）\n"
+welcome_setting = "╒═══【新成员报到】═══╗\n🎉 启禀群主，新成员驾到！🚪\n    昵称：[name]\n    领路人：[inviter]👫\n╘═══【欢迎加入】═══╝\n\n 📝基于开源项目:  https://github.com/yxj1028530975/wechat_robot_flet.git（记得 Star ⭐️）\n"
 # welcome_setting = "╒═══【新成员报到】═══╗\n🎉 启禀群主，新成员驾到！🚪\n    昵称：[name]\n    领路人：[inviter]👫\n╘═══【欢迎加入】═══╝"
 welcome_setting_tip = "新人进群提醒只支持文字、emoji表情,换行in或[enter群用户:[name]"
 fun_setting = "╒══功能提示══╗"

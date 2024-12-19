@@ -1,17 +1,14 @@
 import flet as ft
 from wechat_robot.views.signup_view import SignUpView
 from wechat_robot.utils.ft_utils import msg_erro
-# from wechat_robot.models.db_manager import DatabaseManager
-
 
 class SignUpController:
     def __init__(self, page: ft.Page, app):
         self.page = page
         self.app = app
-        # self.db_manager = DatabaseManager()
         self.view = SignUpView(page, self)
         
-    def add_user(self, first_name, last_name, email, phone, password, confirm_password):
+    def on_signup(self, first_name, last_name, email, phone, password, confirm_password):
         user_data = {
             'first_name': first_name,
             'last_name': last_name,
@@ -30,8 +27,9 @@ class SignUpController:
         else:
             print("用户注册成功！")
                 
-    def on_back(self, event):
+    def on_back(self):
         # 导航回到上一个页面
+        print("你点击了返回")
         self.app.navigate("/")
         print("你点击了返回")
 
