@@ -24,7 +24,9 @@
 > 智微助手是一个功能强大的 Python 微信机器人框架，基于Flet项目开发界面，支持丰富的接口和高扩展性。目前处于开发阶段，现有功能不完善，请谨慎使用。
 
 ```
-安装指定微信版本 3.9.10.11
+安装指定微信版本 3.9.10.19
+
+下载地址 https://dldir1.qq.com/weixin/Windows/WeChatSetup.exe
 
 python版本 3.9.11.*
 
@@ -52,8 +54,7 @@ python main.py
 ### 待实现清单请查看issues
 
 ### 疑问解答、学习交流
-![alt text](docs/wechat_robot/jl.jpg)
-
+![交流群](docs/wechat_robot/jl.jpg)
 
 ### 免责声明
 本软件依据github上开源项目 WeChatApi开发
